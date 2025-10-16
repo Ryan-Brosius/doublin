@@ -29,8 +29,6 @@ public class StaffGoblinController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log(_InputManager.IsResolvable());
-
         Vector3 move = new Vector3(currentMove.x, 0, currentMove.y);
         transform.Translate(move * moveSpeed * Time.deltaTime, Space.World);
     }

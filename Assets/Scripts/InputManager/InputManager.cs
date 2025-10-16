@@ -1,8 +1,6 @@
 using System;
 using UnityEngine;
 
-public enum GameState { Separated, StaffTop, BookTop }
-
 /*  Owner: Ryan Brosius
  * 
  *  This is the wrapper for unity input actions into our own actions. Instead of grabbing the input actions from the
@@ -37,7 +35,6 @@ public class InputManager : SingletonMonobehavior<InputManager>
 
     // ADD ALL UI ACTIONS HERE
 
-    [SerializeField] private GameState currentGameState;
 
     // Internal enum to make referencing states easier
     private enum PlayerID
@@ -45,6 +42,8 @@ public class InputManager : SingletonMonobehavior<InputManager>
         GrimoireGoblin,
         StaffGoblin
     }
+
+    private LazyDependency<GoblinStateManager> _GoblinStateManager;
 
     protected override void Awake()
     {
@@ -90,15 +89,15 @@ public class InputManager : SingletonMonobehavior<InputManager>
         }
 
         // Handles movement if players are combined
-        switch (currentGameState)
+        switch (_GoblinStateManager.Value.CurrentGoblinState.Value)
         {
-            case GameState.Separated:
+            case GoblinState.Separated:
                 OnCombinedMove?.Invoke(Vector2.zero);
                 break;
-            case GameState.StaffTop:
+            case GoblinState.StaffTop:
                 if (player == PlayerID.GrimoireGoblin) OnCombinedMove?.Invoke(input);
                 break;
-            case GameState.BookTop:
+            case GoblinState.BookTop:
                 if (player == PlayerID.StaffGoblin) OnCombinedMove?.Invoke(input);
                 break;
         }
@@ -118,12 +117,12 @@ public class InputManager : SingletonMonobehavior<InputManager>
 
         // Handles jump if players are combined
         // only top goblin is allowed to jump (off)
-        switch (currentGameState)
+        switch (_GoblinStateManager.Value.CurrentGoblinState.Value)
         {
-            case GameState.StaffTop:
+            case GoblinState.StaffTop:
                 if (player == PlayerID.GrimoireGoblin) OnCombinedJump?.Invoke();
                 break;
-            case GameState.BookTop:
+            case GoblinState.BookTop:
                 if (player == PlayerID.StaffGoblin) OnCombinedJump?.Invoke();
                 break;
         }
