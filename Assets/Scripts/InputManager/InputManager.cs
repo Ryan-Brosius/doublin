@@ -1,14 +1,7 @@
 using System;
 using UnityEngine;
 
-// if this is still here make sure I remmeber to delete it later
 public enum GameState { Separated, StaffTop, BookTop }
-public enum PlayerID
-{
-    GrimoireGoblin, // Grimoire Goblin
-    StaffGoblin  // Staff Goblin
-}
-
 
 /*  Owner: Ryan Brosius
  * 
@@ -19,7 +12,7 @@ public enum PlayerID
  *  For example, if the goblin state is the book goblin on the bottom, then we can allow their move input to be the overall move input (for the combined goblin).
  *  If the bottom goblin is the caster, then we use their inputs.
  *  
- *  Cheaky but is only really made for keyboard at the moment, I can gloss over and try to make it work with two controllers in the future :')
+ *  Cheeky but is only really made for keyboard at the moment, I can gloss over and try to make it work with two controllers in the future :')
  */
 public class InputManager : SingletonMonobehavior<InputManager>
 {
@@ -42,10 +35,16 @@ public class InputManager : SingletonMonobehavior<InputManager>
     public event Action<Vector2> OnCombinedLook;
     public event Action OnCombinedJump;
 
-
     // ADD ALL UI ACTIONS HERE
 
     [SerializeField] private GameState currentGameState;
+
+    // Internal enum to make referencing states easier
+    private enum PlayerID
+    {
+        GrimoireGoblin,
+        StaffGoblin
+    }
 
     protected override void Awake()
     {
