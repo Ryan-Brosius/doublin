@@ -1416,7 +1416,7 @@ MonoBehaviour:
   staffTransform: {fileID: 732274657}
   combineDistanceThreshold: 10
   thresholdHysteresis: 1
-  transitionBlendSeconds: 2
+  transitionBlendSeconds: 0.5
 --- !u!1 &1423246438
 GameObject:
   m_ObjectHideFlags: 0
