@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -8,16 +9,15 @@ using UnityEngine;
  *  Manager that controls how the camera reacts in the scene. Quite simple as that, it can set up the split-screen view
  *  and will do fancy camera tricks when we need
  *  
- *  I need to comment later :')
- *  Im tired
  */
 public class CameraManager : SingletonMonobehavior<CameraManager>
 {
     [Header("Unity Cameras")]
-    [SerializeField] private GameObject combinedCameraGameobject;
-    [SerializeField] private GameObject grimoireCameraGameobject;
-    [SerializeField] private GameObject staffCameraGameobject;
-    [SerializeField] private GameObject targetGroupCameraGameobject;
+    [SerializeField] private Camera combinedCamera;
+    [SerializeField] private Camera grimoireCamera;
+    [SerializeField] private Camera staffCamera;
+    [SerializeField] private Camera targetGroupCamera;
+    private List<Camera> cameras;
 
     [Header("Virtual Cameras")]
     [SerializeField] private CinemachineCamera combinedCameraCinemachine;
@@ -34,19 +34,51 @@ public class CameraManager : SingletonMonobehavior<CameraManager>
     [SerializeField] float combineDistanceThreshold = 8f;
     [Tooltip("Hysteresis margin to prevent flip-flopping when players hover near threshold.")]
     [SerializeField] private float thresholdHysteresis = 1.5f;
-    [Tooltip("Blend duration for CinemachineBrain when optionally overriding.")]
-    [SerializeField] float transitionBlendSeconds = 0.35f;
-
-    [Header("Composer Offsets")]
-    [SerializeField] Vector3 combinedOffsetDefault = Vector3.zero;
-    [SerializeField] Vector3 combinedOffsetWhenGrimoireUI = new Vector3(2f, 0f, 0f);
+    [Tooltip("Blend duration for CinemachineBrain moving to correct transform")]
+    [SerializeField] float transitionBlendSeconds = .5f;
 
     private Coroutine _transitionCoroutine;
     LazyDependency<GoblinStateManager> _GoblinStateManager;
     private bool isUsingSplit = false;
 
+    const int LOW_PRIORITY = 10;
+    const int HIGH_PRIORITY = 20;
+
+    #region Unity Functions
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        cameras = new List<Camera>()
+        {
+            combinedCamera,
+            grimoireCamera,
+            staffCamera,
+            targetGroupCamera
+        };
+
+        List<CinemachineBrain> cameraBrains = cameras
+            .Select(cam => cam.GetComponent<CinemachineBrain>())
+            .ToList();
+
+        // Setting each brain to have a transition duration of blend seconds
+        foreach (var brain in cameraBrains)
+        {
+            brain.DefaultBlend.Time = transitionBlendSeconds;
+        }
+    }
+
     private void Start()
     {
+        // Apply the current camera state
+        ApplyCameraState(_GoblinStateManager.Value.CurrentGoblinState.Value);
+
+        // Set split cameras to correct start settings
+        SetObliqueness(grimoireCamera, -1, 0);
+        SetObliqueness(staffCamera, 1, 0);
+
+        // Subscribe so we can change whenever goblin state updates
         _GoblinStateManager.Value.CurrentGoblinState.Subscribe(ApplyCameraState);
     }
 
@@ -63,27 +95,30 @@ public class CameraManager : SingletonMonobehavior<CameraManager>
 
     private void Update()
     {
-        ApplyCameraState(_GoblinStateManager.Value.CurrentGoblinState.Value);
+        //ApplyCameraState(_GoblinStateManager.Value.CurrentGoblinState.Value);
 
+        // Grabbing distance between goblins and doing some transition checks
         if (_GoblinStateManager.Value.CurrentGoblinState.Value == GoblinState.Separated)
         {
             float distance = Vector3.Distance(grimoireTransform.position, staffTransform.position);
             bool shouldBeSplit = ShouldUseSplit(distance);
 
+            // If we need to split/unsplit and currently not using it
             if (shouldBeSplit != isUsingSplit)
             {
+                isUsingSplit = shouldBeSplit;
                 if (_transitionCoroutine != null) StopCoroutine(_transitionCoroutine);
                 _transitionCoroutine = StartCoroutine(SwitchSplitCombine(!shouldBeSplit));
             }
         }
     }
 
-    // Pretty sure this is broken :/
+    #endregion
+
+    #region Private Helpers
+
     private bool ShouldUseSplit(float distance)
     {
-        Debug.Log(isUsingSplit);
-        Debug.Log(distance);
-
         if (!isUsingSplit && distance > combineDistanceThreshold + thresholdHysteresis)
             return true;
 
@@ -95,10 +130,7 @@ public class CameraManager : SingletonMonobehavior<CameraManager>
 
     private void ApplyCameraState(GoblinState state)
     {
-        combinedCameraGameobject.SetActive(false);
-        targetGroupCameraGameobject.SetActive(false);
-        grimoireCameraGameobject.SetActive(false);
-        staffCameraGameobject.SetActive(false);
+        // Gets the correct camera state whenever the goblin state observable is changed
 
         switch (state)
         {
@@ -108,45 +140,106 @@ public class CameraManager : SingletonMonobehavior<CameraManager>
 
             case GoblinState.StaffTop:
             case GoblinState.BookTop:
-                combinedCameraGameobject.SetActive(true);
+                DisplayCameraInFront(combinedCamera);
                 break;
         }
     }
 
     private void HandleSeparatedState()
     {
-        float distance = Vector3.Distance(grimoireTransform.position, staffTransform.position);
-
-        if (distance <= combineDistanceThreshold)
-        {
-            targetGroupCameraGameobject.SetActive(true);
-            isUsingSplit = false;
-        }
-        else
-        {
-            grimoireCameraGameobject.SetActive(true);
-            staffCameraGameobject.SetActive(true);
-            isUsingSplit = true;
-        }
+        DisplayCameraInFront(grimoireCamera, staffCamera);
+        isUsingSplit = false;
     }
 
-    private IEnumerator SwitchSplitCombine(bool toCombined)
+    private IEnumerator SwitchSplitCombine(bool combineCameras)
     {
-        if (toCombined)
+        // Handles how the camera reacts when the camera either needs to split or combine
+
+        float elapsed = 0f;
+
+        // Starting pos/angles of split cameras
+        Vector3 grimoireStartPos = grimoireCamera.transform.position;
+        Quaternion grimoireStartRot = grimoireCamera.transform.rotation;
+
+        Vector3 staffStartPos = staffCamera.transform.position;
+        Quaternion staffStartRot = staffCamera.transform.rotation;
+
+        // Get current obliqueness values of camera transforms
+        float grimoireStart = GetCurrentObliqueness(grimoireCamera);
+        float staffStart = GetCurrentObliqueness(staffCamera);
+
+        // Target positions of split cameras
+        Vector3 grimoireTargetPos = combineCameras ? targetGroupCamera.transform.position : grimoireTransform.position;
+        Quaternion grimoireTargetRot = combineCameras ? targetGroupCamera.transform.rotation : grimoireTransform.rotation;
+
+        Vector3 staffTargetPos = combineCameras ? targetGroupCamera.transform.position : staffTransform.position;
+        Quaternion staffTargetRot = combineCameras ? targetGroupCamera.transform.rotation : staffTransform.rotation;
+
+        // Determine what values obliqueness needs to be tweened to
+        // 0 is completely center of view, -1/1 is sliced in half view
+        float grimoireTarget = combineCameras ? -1f : 0f;
+        float staffTarget = combineCameras ? 1f : 0f;
+
+        // Setting camera priority for camera lerp towards target
+        grimoireCameraCinemachine.Priority = combineCameras ? LOW_PRIORITY : HIGH_PRIORITY;
+        staffCameraCinemachine.Priority = combineCameras ? LOW_PRIORITY : HIGH_PRIORITY;
+        targetGroupCameraCinemachine.Priority = combineCameras ? HIGH_PRIORITY : LOW_PRIORITY;
+
+        // Display split cameras in the front
+        DisplayCameraInFront(grimoireCamera, staffCamera);
+
+        // Change the obliqueness matrix of the cameras here
+        // Also changes the positions of the cameras
+        while (elapsed < transitionBlendSeconds)
         {
-            grimoireCameraGameobject.SetActive(false);
-            staffCameraGameobject.SetActive(false);
-            targetGroupCameraGameobject.SetActive(true);
-            isUsingSplit = false;
-        }
-        else
-        {
-            targetGroupCameraGameobject.SetActive(false);
-            grimoireCameraGameobject.SetActive(true);
-            staffCameraGameobject.SetActive(true);
-            isUsingSplit = true;
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / transitionBlendSeconds);
+            float smoothT = Mathf.SmoothStep(0f, 1f, t);
+
+            grimoireCamera.transform.position = Vector3.Lerp(grimoireStartPos, grimoireTargetPos, smoothT);
+            grimoireCamera.transform.rotation = Quaternion.Slerp(grimoireStartRot, grimoireTargetRot, smoothT);
+
+            staffCamera.transform.position = Vector3.Lerp(staffStartPos, staffTargetPos, smoothT);
+            staffCamera.transform.rotation = Quaternion.Slerp(staffStartRot, staffTargetRot, smoothT);
+
+            SetObliqueness(grimoireCamera, Mathf.Lerp(grimoireStart, grimoireTarget, t), 0f);
+            SetObliqueness(staffCamera, Mathf.Lerp(staffStart, staffTarget, t), 0f);
+
+            yield return null;
         }
 
-        yield return new WaitForSeconds(transitionBlendSeconds);
+        // Making sure values are finalized
+        SetObliqueness(grimoireCamera, grimoireTarget, 0f);
+        SetObliqueness(staffCamera, staffTarget, 0f);
     }
+
+    public void DisplayCameraInFront(params Camera[] frontCams)
+    {
+        foreach (Camera camera in cameras)
+        {
+            camera.depth = 0;
+        }
+
+        foreach (Camera camera in frontCams)
+        {
+            camera.depth = 1;
+        }
+    }
+
+    void SetObliqueness(Camera camera, float horizontalOblique, float verticalOblique)
+    {
+        Matrix4x4 mat = camera.projectionMatrix;
+
+        mat[0, 2] = horizontalOblique;
+        mat[1, 2] = verticalOblique;
+
+        camera.projectionMatrix = mat;
+    }
+
+    float GetCurrentObliqueness(Camera cam)
+    {
+        return cam.projectionMatrix[0, 2];
+    }
+
+    #endregion
 }
