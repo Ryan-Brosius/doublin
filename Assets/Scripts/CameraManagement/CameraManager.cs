@@ -4,6 +4,7 @@ using System.Linq;
 using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
+using static InputManager;
 
 /*  Owner: Ryan
  *  
@@ -24,12 +25,6 @@ public class CameraManager : SingletonMonobehavior<CameraManager>
     [SerializeField] private CinemachineCamera grimoireCameraCinemachine;
     [SerializeField] private CinemachineCamera staffCameraCinemachine;
     [SerializeField] private CinemachineCamera targetGroupCameraCinemachine;
-
-    [Header("Cinemachine Input Axis Controllers")]
-    [SerializeField] private CinemachineInputAxisController grimoireInputAxisController;
-    [SerializeField] private CinemachineInputAxisController staffInputAxisController;
-    [SerializeField] private CinemachineInputAxisController targetGroupInputAxisController;
-
 
     [Header("Targeting")]
     [SerializeField] Transform grimoireTransform;
@@ -228,6 +223,26 @@ public class CameraManager : SingletonMonobehavior<CameraManager>
     float GetCurrentObliqueness(Camera cam)
     {
         return cam.projectionMatrix[0, 2];
+    }
+
+    #endregion
+
+    #region Public Functions
+
+    public Vector3 GetCameraFlatForwardTransform(PlayerID playerID)
+    {
+        var vec = Vector3.zero;
+
+        if (playerID == PlayerID.GrimoireGoblin)
+        {
+            vec = grimoireCamera.transform.forward;
+        }
+        if (playerID == PlayerID.StaffGoblin)
+        {
+            vec = staffCamera.transform.forward;
+        }
+
+        return new Vector3(vec.x, 0f, vec.z).normalized;
     }
 
     #endregion

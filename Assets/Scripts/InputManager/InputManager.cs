@@ -41,7 +41,7 @@ public class InputManager : SingletonMonobehavior<InputManager>
     [SerializeField] float KeyboardMovementRadiansPerSec = 30f;
 
     // Internal enum to make referencing states easier
-    private enum PlayerID
+    public enum PlayerID
     {
         GrimoireGoblin,
         StaffGoblin
