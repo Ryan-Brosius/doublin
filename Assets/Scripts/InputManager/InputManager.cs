@@ -36,6 +36,10 @@ public class InputManager : SingletonMonobehavior<InputManager>
     // ADD ALL UI ACTIONS HERE
 
 
+    [Header("Look Settings Here")]
+    [SerializeField] float MouseMovementMultiplier = 1.0f;
+    [SerializeField] float KeyboardMovementRadiansPerSec = 30f;
+
     // Internal enum to make referencing states easier
     private enum PlayerID
     {
@@ -56,12 +60,15 @@ public class InputManager : SingletonMonobehavior<InputManager>
         inputActions.Player1.Move.canceled += _ => HandleMove(PlayerID.GrimoireGoblin, Vector2.zero);
         inputActions.Player1.Jump.performed += _ => HandleJump(PlayerID.GrimoireGoblin);
         inputActions.Player1.Look.performed += ctx => HandleLook(PlayerID.GrimoireGoblin, ctx.ReadValue<Vector2>());
+        inputActions.Player1.Look.canceled += ctx => HandleLook(PlayerID.GrimoireGoblin, Vector2.zero);
+
 
         // Player 2 (Staff Goblin)
         inputActions.Player2.Move.performed += ctx => HandleMove(PlayerID.StaffGoblin, ctx.ReadValue<Vector2>());
         inputActions.Player2.Move.canceled += _ => HandleMove(PlayerID.StaffGoblin, Vector2.zero);
         inputActions.Player2.Jump.performed += _ => HandleJump(PlayerID.StaffGoblin);
         inputActions.Player2.Look.performed += ctx => HandleLook(PlayerID.StaffGoblin, ctx.ReadValue<Vector2>());
+        inputActions.Player2.Look.canceled += ctx => HandleLook(PlayerID.StaffGoblin, Vector2.zero);
     }
 
     private void OnEnable()
@@ -134,7 +141,8 @@ public class InputManager : SingletonMonobehavior<InputManager>
         if (player == PlayerID.GrimoireGoblin)
         {
             OnGrimoireLook?.Invoke(input);
-        } else
+        }
+        else
         {
             OnStaffLook?.Invoke(input);
         }
