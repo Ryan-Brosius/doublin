@@ -161,8 +161,6 @@ public class InputManager : SingletonMonobehavior<InputManager>
 
     private void HandleIncant(PlayerID player, string incant)
     {
-        Debug.Log(incant);
-
         // Only incant if goblin state allows
         if (player == PlayerID.GrimoireGoblin)
         {
