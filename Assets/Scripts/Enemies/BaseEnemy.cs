@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityHFSM;
 
-/* Owner: Cameron Romero
+/*
+ * Owner: Cameron Romero
  *
  * Base class for all enemy types
  * Contains common functionality and properties for all enemies
- * */
+ *
+ * TakeDamage() and Die() are not being used as of 10/17, will change when needed
+ */
 
 public class BaseEnemy : MonoBehaviour
 {
@@ -16,7 +19,7 @@ public class BaseEnemy : MonoBehaviour
     protected Rigidbody rb;
 
     [SerializeField] protected float scanningRange = 30f;
-    protected float maxHealth = 1f;
+    [SerializeField] protected float maxHealth = 100f;
     protected float currentHealth;
 
     protected StateMachine fsm;

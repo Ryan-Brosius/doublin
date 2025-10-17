@@ -152,9 +152,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scanningRange: 10
-  necromanceAbilities:
+  maxHealth: 1
+  necromancerAbilities:
   - ability: 0
-    cooldown: 15
+    defaultCooldown: 15
+    currentCooldown: 0
   slimePrefab: {fileID: 1780739345498017388, guid: 188cfbcac757c4eca8102bb6f25fadca, type: 3}
   skeletonPrefab: {fileID: 0}
   boneSpikePrefab: {fileID: 0}

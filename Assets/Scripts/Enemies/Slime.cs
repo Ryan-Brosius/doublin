@@ -5,8 +5,15 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityHFSM;
 
+/*
+ * Owner: Cameron Romero
+ *
+ * Logic for Slime enemy
+ */
+
 public class Slime : BaseSummon
 {
+    // Iterable fields for the slime jump, default values also set in Slime prefab
     [SerializeField] private float horizontalJumpForce = 2f;
     [SerializeField] private float verticalJumpForce = 4f;
     [SerializeField] private float jumpRange = 3f;
@@ -16,6 +23,7 @@ public class Slime : BaseSummon
         base.Awake();
     }
 
+    // If the slime is within the jump range and is grounded, the slime will jump at the player
     protected override void Start()
     {
         base.Start();
@@ -31,12 +39,12 @@ public class Slime : BaseSummon
         fsm.Init();
     }
 
-    protected override void Update()
+    protected void Update()
     {
         base.Update();
-        fsm.OnLogic();
     }
 
+    // Basic jump function, just changes linear velocity of the rb to the jump vector
     private void Jump()
     {
         if (playerTransform == null || !IsGrounded()) return;

@@ -8,13 +8,13 @@ using UnityHFSM;
 /*
  * Owner: Cameron Romero
  *
- * Logic for the Skeleton enemy
+ * Logic for Ghoul enemy
  *
- * Skeleton just chases the player
- * Prefab has default values for health and movespeed
+ * Ghoul chases player
+ * Ghoul prefab has default values for movespeed and health
  */
 
-public class Skeleton : BaseSummon
+public class Ghoul : BaseSummon
 {
     protected override void Awake()
     {
