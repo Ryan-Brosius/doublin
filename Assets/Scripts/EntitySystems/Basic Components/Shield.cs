@@ -24,8 +24,7 @@ public class Shield : MonoBehaviour, IShield
 
     private void Awake()
     {
-        // Only spawn shield if it exists, handled in initialize if needed
-        if (ShieldVFX != null) SpawnShieldVFX(ShieldVFX);
+        ScaleShieldVFX();
     }
 
     // Called from a ShieldSpellData scriptable object to dynamically create a shield
@@ -34,8 +33,6 @@ public class Shield : MonoBehaviour, IShield
         shieldHealth = hp;
         element = elem;
         resolver = res ?? null;
-
-        if (shieldVFX != null) SpawnShieldVFX(shieldVFX);
     }
 
     public bool AbsorbDamage(Damage damage, out float leftover)
@@ -62,13 +59,18 @@ public class Shield : MonoBehaviour, IShield
         Destroy(gameObject);
     }
 
-    private void SpawnShieldVFX(GameObject ShieldVFX)
+    private void ScaleShieldVFX()
     {
+        if (ShieldVFX == null)
+            return;
+
         // Grab the parent that we are attatched to
         Transform parent = transform.parent;
         if (parent == null)
             // If parent not found just bail, was not spawned/attatched properly
             return;
+
+        ShieldVFX.transform.SetParent(parent);
 
         // Grab all renderers in the parent
         Renderer[] renderers = parent.GetComponentsInChildren<Renderer>();
@@ -79,14 +81,11 @@ public class Shield : MonoBehaviour, IShield
 
         // Grow a bounds to the size of the largest from the center
         Bounds totalBounds = renderers[0].bounds;
-        foreach (var renderer  in renderers)
+        foreach (var renderer in renderers)
             totalBounds.Encapsulate(renderer.bounds);
-
-        // Spawn in the shield VFX
-        GameObject shield = Instantiate(ShieldVFX, totalBounds.center, Quaternion.identity, gameObject.transform);
 
         // Scale up the sphere VFX as needed to be largest bounds size * multiplier
         float maxSize = Mathf.Max(totalBounds.size.x, totalBounds.size.y, totalBounds.size.z);
-        shield.transform.localScale = Vector3.one * maxSize * shieldScaleMultiplier;
+        ShieldVFX.transform.localScale = Vector3.one * maxSize * shieldScaleMultiplier;
     }
 }
