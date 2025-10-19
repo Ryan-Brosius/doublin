@@ -86,6 +86,6 @@ public class Shield : MonoBehaviour, IShield
 
         // Scale up the sphere VFX as needed to be largest bounds size * multiplier
         float maxSize = Mathf.Max(totalBounds.size.x, totalBounds.size.y, totalBounds.size.z);
-        ShieldVFX.transform.localScale = Vector3.one * maxSize * shieldScaleMultiplier;
+        ShieldVFX.transform.localScale = ShieldVFX.transform.localScale * maxSize * shieldScaleMultiplier;
     }
 }
