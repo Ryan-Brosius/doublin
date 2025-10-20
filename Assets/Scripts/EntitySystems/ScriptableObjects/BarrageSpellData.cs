@@ -1,22 +1,21 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Spells/Offensive Blast Spell")]
-public class BlastSpellData : SpellData
+[CreateAssetMenu(menuName = "Spells/Offensive Barrage Spell")]
+public class BarrageSpellData : SpellData
 {
-    [Header("Blast Properties")]
+    [Header("Barrage Properties")]
     public float speed;
-    public float radius;
 
     public override void Cast(GameObject caster)
     {
 
         var instance = Instantiate(spellPrefab, caster.transform.position, Quaternion.identity);
         var spell = instance.GetComponent<ISpell>();
-        if (spell is Blast b)
-                b.Initialize(element, caster, speed, radius);
+        if (spell is Barrage b)
+                b.Initialize(element, caster, speed);
     }
 
     public override float GetCooldown(){
-        return 18f;
+        return 15f;
     }
 }

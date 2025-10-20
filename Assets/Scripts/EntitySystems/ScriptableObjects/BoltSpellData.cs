@@ -9,7 +9,7 @@ public class BoltSpellData : SpellData
     public override void Cast(GameObject caster)
     {
 
-        var instance = Instantiate(spellPrefab);
+        var instance = Instantiate(spellPrefab, caster.transform.position, Quaternion.identity);
         var spell = instance.GetComponent<ISpell>();
         if (spell is Bolt b)
                 b.Initialize(element, caster, speed);

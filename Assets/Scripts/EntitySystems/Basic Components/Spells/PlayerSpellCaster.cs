@@ -8,11 +8,7 @@ public class PlayerSpellCaster : MonoBehaviour, ISpellCaster
     [SerializeField] private bool isBuffed = false;
     Dictionary<string, bool> cooldowns = new Dictionary<string, bool>();
     private string incant = "";
-
-    public BoltSpellData fireBolt;
-    public BoltSpellData iceBolt;
-    public BlastSpellData fireBlast;
-    public BlastSpellData iceBlast;
+    
     public GameObject spoof;
 
     LazyDependency<InputManager> _InputManager;

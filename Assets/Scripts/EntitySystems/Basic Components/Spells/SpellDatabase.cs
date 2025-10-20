@@ -12,6 +12,8 @@ public class SpellDatabase : SingletonMonobehavior<SpellDatabase>
     public BoltSpellData iceBolt;
     public BlastSpellData fireBlast;
     public BlastSpellData iceBlast;
+    public BarrageSpellData fireBarrage;
+    public BarrageSpellData iceBarrage;
     public GameObject spoof;
 
     protected override void Awake()
@@ -20,10 +22,10 @@ public class SpellDatabase : SingletonMonobehavior<SpellDatabase>
         SpellList =  new Dictionary<string, SpellData>()
         {
             {"Fire Bolt", fireBolt },
-           // { "Fire Barrage", fireBarrage },
+            {"Fire Barrage", fireBarrage },
             {"Fire Blast", fireBlast},
             {"Ice Bolt", iceBolt },
-           // { "Ice Barrage", iceBarrage },
+            {"Ice Barrage", iceBarrage },
             {"Ice Blast", iceBlast },
             //eventually spoof will be a spelldata
         };

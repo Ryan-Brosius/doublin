@@ -40,7 +40,6 @@ public class Bolt : MonoBehaviour, ISpell
     void onCollisionEnter(Collision collision){
         StopCoroutine(Fizzle());
         Destroy(gameObject);
-        //Collision.collider.TakeDamage(damage);
     }
 
    
