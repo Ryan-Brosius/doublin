@@ -2145,7 +2145,7 @@ Transform:
   m_GameObject: {fileID: 397683145}
   serializedVersion: 2
   m_LocalRotation: {x: 0.1736482, y: 0, z: 0, w: 0.9848078}
-  m_LocalPosition: {x: -0.4, y: 3.4202013, z: -9.396926}
+  m_LocalPosition: {x: 2, y: 3.4202013, z: -9.396926}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2482,7 +2482,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 90
+  field of view: 70
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -2509,7 +2509,7 @@ Transform:
   m_GameObject: {fileID: 546812541}
   serializedVersion: 2
   m_LocalRotation: {x: 0.1736482, y: 0, z: 0, w: 0.9848078}
-  m_LocalPosition: {x: -0.4, y: 3.4202013, z: -9.396926}
+  m_LocalPosition: {x: 0, y: 3.9202013, z: -9.396926}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16943,6 +16943,56 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &2069434368
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2069434370}
+  - component: {fileID: 2069434369}
+  m_Layer: 0
+  m_Name: SpellDatabase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2069434369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2069434368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90903ac57da33e945a2ecbe1c40b564a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _persistAcrossScenes: 1
+  fireBolt: {fileID: 11400000, guid: 2a475604abae9c7498b6a392ae293c10, type: 2}
+  iceBolt: {fileID: 11400000, guid: bbf59b84991369848ad3e76c32dd737a, type: 2}
+  fireBlast: {fileID: 11400000, guid: 4a212f820e2edb448ad079e4a4f5c99d, type: 2}
+  iceBlast: {fileID: 11400000, guid: 786b6bbb9d74b1647b9574d6e4696c72, type: 2}
+  spoof: {fileID: 3091713888809898568, guid: 8347ba61275597c4698b02b97948fa8a, type: 3}
+--- !u!4 &2069434370
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2069434368}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.99, y: 0, z: 3.139}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2078105787
 GameObject:
   m_ObjectHideFlags: 0
@@ -17097,3 +17147,4 @@ SceneRoots:
   - {fileID: 137527874}
   - {fileID: 446112366}
   - {fileID: 784154735}
+  - {fileID: 2069434370}

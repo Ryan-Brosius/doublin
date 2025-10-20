@@ -16,7 +16,7 @@ public class BlastSpellData : SpellData
                 b.Initialize(element, caster, speed, radius);
     }
 
-    public float GetCooldown(){
+    public override float GetCooldown(){
         return 18f;
     }
 }

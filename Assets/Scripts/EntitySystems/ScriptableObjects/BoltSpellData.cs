@@ -15,7 +15,7 @@ public class BoltSpellData : SpellData
                 b.Initialize(element, caster, speed);
     }
 
-    public float GetCooldown(){
+    public override float GetCooldown(){
         return 12f;
     }
 }

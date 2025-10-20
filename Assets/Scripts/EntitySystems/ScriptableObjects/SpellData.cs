@@ -25,4 +25,8 @@ public abstract class SpellData : ScriptableObject
 
     // Should derive from this to instantiate the spell itself
     public abstract void Cast(GameObject caster);
+
+    public virtual float GetCooldown(){
+        return cooldown;
+    }
 }
