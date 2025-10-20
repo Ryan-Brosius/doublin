@@ -12,6 +12,8 @@ public class PlayerSpellCaster : MonoBehaviour, ISpellCaster
 
     public BoltSpellData fireBolt;
     public BoltSpellData iceBolt;
+    public BlastSpellData fireBlast;
+    public BlastSpellData iceBlast;
     public GameObject spoof;
 
     LazyDependency<InputManager> _InputManager;
@@ -74,6 +76,14 @@ public class PlayerSpellCaster : MonoBehaviour, ISpellCaster
                         case ("Barrage"):
                             break;
                         case ("Blast"):
+                            if(!cooldowns[spell]){
+                                fireBlast.Cast(this.gameObject);
+                                cooldowns[spell] = true;
+                                StartCoroutine(CooldownCounter(spell, fireBlast.GetCooldown()));
+                            }
+                            else {
+                                Instantiate(spoof, gameObject.transform);
+                            }
                             break;
                     }
                     break;
@@ -81,11 +91,26 @@ public class PlayerSpellCaster : MonoBehaviour, ISpellCaster
                     switch (spellTokens[1])
                     {
                         case ("Bolt"):
-                            iceBolt.Cast(this.gameObject);
+                            if(!cooldowns[spell]){
+                                iceBolt.Cast(this.gameObject);
+                                cooldowns[spell] = true;
+                                StartCoroutine(CooldownCounter(spell, iceBolt.GetCooldown()));
+                            }
+                            else {
+                                Instantiate(spoof, gameObject.transform);
+                            }
                             break;
                         case ("Barrage"):
                             break;
                         case ("Blast"):
+                            if(!cooldowns[spell]){
+                                iceBlast.Cast(this.gameObject);
+                                cooldowns[spell] = true;
+                                StartCoroutine(CooldownCounter(spell, iceBlast.GetCooldown()));
+                            }
+                            else {
+                                Instantiate(spoof, gameObject.transform);
+                            }
                             break;
                     }
                     break;
