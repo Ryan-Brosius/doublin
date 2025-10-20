@@ -9,4 +9,9 @@ public class GoblinStateManager : SingletonMonobehavior<GoblinStateManager>
 {
     // Keep this observable as many things will rely on watching this value change
     [SerializeField] public ObservableProperty<GoblinState> CurrentGoblinState;
+
+    [Header("Goblin GameObject References")]
+    [SerializeField] private GameObject CombinedGoblin;
+    [SerializeField] private GameObject GrimoireGoblin;
+    [SerializeField] private GameObject StaffGoblin;
 }

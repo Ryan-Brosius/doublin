@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using static UnityEngine.Rendering.VolumeComponent;
 
 /*  Owner: Ryan Brosius
  * 
@@ -22,22 +23,28 @@ public class InputManager : SingletonMonobehavior<InputManager>
     public event Action<Vector2> OnGrimoireMove;
     public event Action<Vector2> OnGrimoireLook;
     public event Action OnGrimoireJump;
+    public event Action<string> OnGrimoireIncant;  // enum in the future(?)
+    public event Action OnGrimoireBookInteract;
 
     // STAFF GOBLIN ACTIONS HERE
     public event Action<Vector2> OnStaffMove;
     public event Action<Vector2> OnStaffLook;
     public event Action OnStaffJump;
+    public event Action OnStaffCast;
+    public event Action OnStaffCancelIncant;
 
     // ADD COMBINED GOBLIN ACTIONS HERE
     public event Action<Vector2> OnCombinedMove;
     public event Action<Vector2> OnCombinedLook;
-    public event Action OnCombinedJump;
+    public event Action OnCombinedSeperate;
 
     // ADD ALL UI ACTIONS HERE
 
 
     // Internal enum to make referencing states easier
-    private enum PlayerID
+    // This has actually become pretty important for determining players btw
+    // Consider moving this to its own area in the future?
+    public enum PlayerID
     {
         GrimoireGoblin,
         StaffGoblin
@@ -56,12 +63,18 @@ public class InputManager : SingletonMonobehavior<InputManager>
         inputActions.Player1.Move.canceled += _ => HandleMove(PlayerID.GrimoireGoblin, Vector2.zero);
         inputActions.Player1.Jump.performed += _ => HandleJump(PlayerID.GrimoireGoblin);
         inputActions.Player1.Look.performed += ctx => HandleLook(PlayerID.GrimoireGoblin, ctx.ReadValue<Vector2>());
+        inputActions.Player1.Look.canceled += ctx => HandleLook(PlayerID.GrimoireGoblin, Vector2.zero);
+        inputActions.Player1.Incant.performed += ctx => HandleIncant(PlayerID.GrimoireGoblin, ctx.control.name);
+        inputActions.Player1.Jump.performed += ctx => HandleBookInteract(PlayerID.GrimoireGoblin);
 
         // Player 2 (Staff Goblin)
         inputActions.Player2.Move.performed += ctx => HandleMove(PlayerID.StaffGoblin, ctx.ReadValue<Vector2>());
         inputActions.Player2.Move.canceled += _ => HandleMove(PlayerID.StaffGoblin, Vector2.zero);
         inputActions.Player2.Jump.performed += _ => HandleJump(PlayerID.StaffGoblin);
         inputActions.Player2.Look.performed += ctx => HandleLook(PlayerID.StaffGoblin, ctx.ReadValue<Vector2>());
+        inputActions.Player2.Look.canceled += ctx => HandleLook(PlayerID.StaffGoblin, Vector2.zero);
+        inputActions.Player2.Jump.performed += _ => HandleCast(PlayerID.StaffGoblin);
+        inputActions.Player2.CancelIncant.performed += _ => HandleCancelIncantation(PlayerID.StaffGoblin);
     }
 
     private void OnEnable()
@@ -120,10 +133,10 @@ public class InputManager : SingletonMonobehavior<InputManager>
         switch (_GoblinStateManager.Value.CurrentGoblinState.Value)
         {
             case GoblinState.StaffTop:
-                if (player == PlayerID.GrimoireGoblin) OnCombinedJump?.Invoke();
+                if (player == PlayerID.GrimoireGoblin) OnCombinedSeperate?.Invoke();
                 break;
             case GoblinState.BookTop:
-                if (player == PlayerID.StaffGoblin) OnCombinedJump?.Invoke();
+                if (player == PlayerID.StaffGoblin) OnCombinedSeperate?.Invoke();
                 break;
         }
     }
@@ -134,7 +147,8 @@ public class InputManager : SingletonMonobehavior<InputManager>
         if (player == PlayerID.GrimoireGoblin)
         {
             OnGrimoireLook?.Invoke(input);
-        } else
+        }
+        else
         {
             OnStaffLook?.Invoke(input);
         }
@@ -142,6 +156,71 @@ public class InputManager : SingletonMonobehavior<InputManager>
         if (player == PlayerID.StaffGoblin)
         {
             OnCombinedLook?.Invoke(input);
+        }
+    }
+
+    private void HandleIncant(PlayerID player, string incant)
+    {
+        // Only incant if goblin state allows
+        if (player == PlayerID.GrimoireGoblin)
+        {
+            switch (_GoblinStateManager.Value.CurrentGoblinState.Value)
+            {
+                case GoblinState.StaffTop:
+                case GoblinState.BookTop:
+                    OnGrimoireIncant?.Invoke(incant);
+                    break;
+                case GoblinState.Separated:
+                    break;
+            }
+        }
+    }
+
+    private void HandleCast(PlayerID player)
+    {
+        if (player == PlayerID.StaffGoblin)
+        {
+            switch (_GoblinStateManager.Value.CurrentGoblinState.Value)
+            {
+                case GoblinState.StaffTop:
+                    OnStaffCast?.Invoke();
+                    break;
+                case GoblinState.BookTop:
+                case GoblinState.Separated:
+                    break;
+            }
+        }
+    }
+
+    private void HandleBookInteract(PlayerID player)
+    {
+        if (player == PlayerID.StaffGoblin)
+        {
+            switch (_GoblinStateManager.Value.CurrentGoblinState.Value)
+            {
+                case GoblinState.StaffTop:
+                    OnGrimoireBookInteract?.Invoke();
+                    break;
+                case GoblinState.BookTop:
+                case GoblinState.Separated:
+                    break;
+            }
+        }
+    }
+
+    private void HandleCancelIncantation(PlayerID player)
+    {
+        if (player == PlayerID.StaffGoblin)
+        {
+            switch (_GoblinStateManager.Value.CurrentGoblinState.Value)
+            {
+                case GoblinState.StaffTop:
+                    OnStaffCancelIncant?.Invoke();
+                    break;
+                case GoblinState.BookTop:
+                case GoblinState.Separated:
+                    break;
+            }
         }
     }
 }

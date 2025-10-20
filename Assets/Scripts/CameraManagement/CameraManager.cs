@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
+using static InputManager;
 
 /*  Owner: Ryan
  *  
@@ -16,7 +18,6 @@ public class CameraManager : SingletonMonobehavior<CameraManager>
     [SerializeField] private Camera combinedCamera;
     [SerializeField] private Camera grimoireCamera;
     [SerializeField] private Camera staffCamera;
-    [SerializeField] private Camera targetGroupCamera;
     private List<Camera> cameras;
 
     [Header("Virtual Cameras")]
@@ -39,6 +40,7 @@ public class CameraManager : SingletonMonobehavior<CameraManager>
 
     private Coroutine _transitionCoroutine;
     LazyDependency<GoblinStateManager> _GoblinStateManager;
+    LazyDependency<InputManager> _InputManager;
     private bool isUsingSplit = false;
 
     const int LOW_PRIORITY = 10;
@@ -55,7 +57,6 @@ public class CameraManager : SingletonMonobehavior<CameraManager>
             combinedCamera,
             grimoireCamera,
             staffCamera,
-            targetGroupCamera
         };
 
         List<CinemachineBrain> cameraBrains = cameras
@@ -140,7 +141,10 @@ public class CameraManager : SingletonMonobehavior<CameraManager>
 
             case GoblinState.StaffTop:
             case GoblinState.BookTop:
-                DisplayCameraInFront(combinedCamera);
+                combinedCameraCinemachine.Priority = HIGH_PRIORITY;
+                grimoireCameraCinemachine.Priority = LOW_PRIORITY;
+                staffCameraCinemachine.Priority = LOW_PRIORITY;
+                targetGroupCameraCinemachine.Priority = LOW_PRIORITY;
                 break;
         }
     }
@@ -157,23 +161,9 @@ public class CameraManager : SingletonMonobehavior<CameraManager>
 
         float elapsed = 0f;
 
-        // Starting pos/angles of split cameras
-        Vector3 grimoireStartPos = grimoireCamera.transform.position;
-        Quaternion grimoireStartRot = grimoireCamera.transform.rotation;
-
-        Vector3 staffStartPos = staffCamera.transform.position;
-        Quaternion staffStartRot = staffCamera.transform.rotation;
-
         // Get current obliqueness values of camera transforms
         float grimoireStart = GetCurrentObliqueness(grimoireCamera);
         float staffStart = GetCurrentObliqueness(staffCamera);
-
-        // Target positions of split cameras
-        Vector3 grimoireTargetPos = combineCameras ? targetGroupCamera.transform.position : grimoireTransform.position;
-        Quaternion grimoireTargetRot = combineCameras ? targetGroupCamera.transform.rotation : grimoireTransform.rotation;
-
-        Vector3 staffTargetPos = combineCameras ? targetGroupCamera.transform.position : staffTransform.position;
-        Quaternion staffTargetRot = combineCameras ? targetGroupCamera.transform.rotation : staffTransform.rotation;
 
         // Determine what values obliqueness needs to be tweened to
         // 0 is completely center of view, -1/1 is sliced in half view
@@ -196,12 +186,6 @@ public class CameraManager : SingletonMonobehavior<CameraManager>
             float t = Mathf.Clamp01(elapsed / transitionBlendSeconds);
             float smoothT = Mathf.SmoothStep(0f, 1f, t);
 
-            grimoireCamera.transform.position = Vector3.Lerp(grimoireStartPos, grimoireTargetPos, smoothT);
-            grimoireCamera.transform.rotation = Quaternion.Slerp(grimoireStartRot, grimoireTargetRot, smoothT);
-
-            staffCamera.transform.position = Vector3.Lerp(staffStartPos, staffTargetPos, smoothT);
-            staffCamera.transform.rotation = Quaternion.Slerp(staffStartRot, staffTargetRot, smoothT);
-
             SetObliqueness(grimoireCamera, Mathf.Lerp(grimoireStart, grimoireTarget, t), 0f);
             SetObliqueness(staffCamera, Mathf.Lerp(staffStart, staffTarget, t), 0f);
 
@@ -213,7 +197,7 @@ public class CameraManager : SingletonMonobehavior<CameraManager>
         SetObliqueness(staffCamera, staffTarget, 0f);
     }
 
-    public void DisplayCameraInFront(params Camera[] frontCams)
+    private void DisplayCameraInFront(params Camera[] frontCams)
     {
         foreach (Camera camera in cameras)
         {
@@ -239,6 +223,26 @@ public class CameraManager : SingletonMonobehavior<CameraManager>
     float GetCurrentObliqueness(Camera cam)
     {
         return cam.projectionMatrix[0, 2];
+    }
+
+    #endregion
+
+    #region Public Functions
+
+    public Vector3 GetCameraFlatForwardTransform(PlayerID playerID)
+    {
+        var vec = Vector3.zero;
+
+        if (playerID == PlayerID.GrimoireGoblin)
+        {
+            vec = grimoireCamera.transform.forward;
+        }
+        if (playerID == PlayerID.StaffGoblin)
+        {
+            vec = staffCamera.transform.forward;
+        }
+
+        return new Vector3(vec.x, 0f, vec.z).normalized;
     }
 
     #endregion
