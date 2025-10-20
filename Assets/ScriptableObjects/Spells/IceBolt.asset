@@ -18,3 +18,4 @@ MonoBehaviour:
   baseDamage: 3
   cooldown: 3
   spellPrefab: {fileID: 2480534260677487915, guid: ecf1ae08f06d0e7499a4e5c7f566146d, type: 3}
+  speed: 3

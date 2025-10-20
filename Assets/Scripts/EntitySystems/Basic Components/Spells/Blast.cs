@@ -16,19 +16,21 @@ public class Blast : MonoBehaviour, ISpell
     private GameObject spellCaster;
     private Vector3 direction;
     private bool burst = false;
+    private float speed;
 
 
-    public void Initialize(Element elem, GameObject caster, float rad,  GameObject BoltVFX = null)
+    public void Initialize(Element elem, GameObject caster, float spd, float rad, GameObject BoltVFX = null)
     {
         element = elem;
         spellCaster = caster;
         direction = spellCaster.transform.forward;
+        speed = spd;
         radius = rad;
         StartCoroutine(Fizzle());
     }
 
     public void Update(){
-        transform.position += this.transform.forward * 0.1f;
+        transform.position += this.transform.forward * speed * Time.deltaTime;
     }
 
     IEnumerator Fizzle(){

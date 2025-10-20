@@ -4,16 +4,16 @@ using UnityEngine;
 public class BlastSpellData : SpellData
 {
     [Header("Blast Properties")]
-    public Damage damage;
+    public float speed;
     public float radius;
 
     public override void Cast(GameObject caster)
     {
 
-        var instance = Instantiate(spellPrefab, caster.transform);
+        var instance = Instantiate(spellPrefab);
         var spell = instance.GetComponent<ISpell>();
         if (spell is Blast b)
-                b.Initialize(element, caster, radius);
+                b.Initialize(element, caster, speed, radius);
     }
 
     public float GetCooldown(){

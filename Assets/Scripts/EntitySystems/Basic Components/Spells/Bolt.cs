@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
+
+[RequireComponent(typeof(Collider))]
 public class Bolt : MonoBehaviour, ISpell
 {
     [SerializeField] private Damage damage;
@@ -14,18 +16,20 @@ public class Bolt : MonoBehaviour, ISpell
 
     private GameObject spellCaster;
     private Vector3 direction;
+    private float speed;
 
 
-    public void Initialize(Element elem, GameObject caster, GameObject BoltVFX = null)
+    public void Initialize(Element elem, GameObject caster, float spd, GameObject BoltVFX = null)
     {
         element = elem;
         spellCaster = caster;
         direction = spellCaster.transform.forward;
+        speed = spd;
         StartCoroutine(Fizzle());
     }
 
     public void Update(){
-        transform.position += this.transform.forward * 0.1f;
+        transform.position += this.transform.forward * speed * Time.deltaTime;
     }
 
     IEnumerator Fizzle(){

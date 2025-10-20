@@ -4,15 +4,15 @@ using UnityEngine;
 public class BoltSpellData : SpellData
 {
     [Header("Bolt Properties")]
-    public Damage damage;
+    public float speed;
 
     public override void Cast(GameObject caster)
     {
 
-        var instance = Instantiate(spellPrefab, caster.transform);
+        var instance = Instantiate(spellPrefab);
         var spell = instance.GetComponent<ISpell>();
         if (spell is Bolt b)
-                b.Initialize(element, caster, null);
+                b.Initialize(element, caster, speed);
     }
 
     public float GetCooldown(){
