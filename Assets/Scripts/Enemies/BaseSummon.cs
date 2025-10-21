@@ -38,13 +38,15 @@ public class BaseSummon : BaseEnemy
     {
         base.Update();
         fsm.OnLogic();
+        FindClosestTarget();
+        Debug.Log(target);
     }
 
     protected void Chase()
     {
-        if (playerTransform == null) return;
+        if (target == null) return;
 
-        Vector3 direction = (playerTransform.position - transform.position).normalized;
+        Vector3 direction = (target.position - transform.position).normalized;
         rb.linearVelocity = new Vector3(direction.x * moveSpeed, rb.linearVelocity.y, direction.z * moveSpeed);
     }
 }

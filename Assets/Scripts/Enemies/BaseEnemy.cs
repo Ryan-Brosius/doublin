@@ -9,49 +9,98 @@ using UnityHFSM;
  * Base class for all enemy types
  * Contains common functionality and properties for all enemies
  *
- * TakeDamage() and Die() are not being used as of 10/17, will change when needed
  */
 
+[RequireComponent(typeof(Rigidbody))]
 public class BaseEnemy : MonoBehaviour
 {
-    protected Transform playerTransform;
+    protected Transform target;
     protected float distanceToPlayer;
     protected Rigidbody rb;
+    protected GameObject[] players;
+
+    [SerializeField] protected float groundCheckDistance = 0.4f;
+    [SerializeField] protected Vector3 groundCheckOffset = Vector3.zero;
 
     [SerializeField] protected float scanningRange = 30f;
     [SerializeField] protected float maxHealth = 100f;
-    protected float currentHealth;
 
     protected StateMachine fsm;
 
     protected virtual void Awake()
     {
-        currentHealth = maxHealth;
         rb = GetComponent<Rigidbody>();
     }
 
     protected virtual void Start()
     {
-        playerTransform = GameObject.FindWithTag("Player").transform;
+        players = GameObject.FindGameObjectsWithTag("Player");
         fsm = new StateMachine();
     }
 
     protected virtual void Update()
     {
-        distanceToPlayer = Vector3.Distance(playerTransform.position, transform.position);
+        distanceToPlayer = DistanceToTarget;
     }
 
-    public virtual void TakeDamage(int amount)
+    public virtual void SetTarget(Transform newTarget)
     {
-        currentHealth -= amount;
-        if (currentHealth <= 0)
+        target = newTarget;
+    }
+
+    protected virtual void FindRandomTarget()
+    {
+        if (players.Length > 0)
         {
-            Die();
+            int randomIndex = Random.Range(0, players.Length);
+            target = players[randomIndex].transform;
         }
     }
 
-    protected virtual void Die()
+    protected virtual void FindClosestTarget()
     {
-        Destroy(gameObject);
+        if (players.Length > 0)
+        {
+            Transform closest = null;
+            float minDistance = float.MaxValue;
+
+            foreach (GameObject player in players)
+            {
+                float distance = Vector3.Distance(transform.position, player.transform.position);
+
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    closest = player.transform;
+                }
+            }
+            target = closest;
+        }
+
+    }
+
+    protected float DistanceToTarget
+    {
+        get
+        {
+            if (target == null) return float.MaxValue;
+            return Vector3.Distance(transform.position, target.position);
+        }
+    }
+
+    protected bool IsGrounded()
+    {
+        Vector3 origin = transform.position + groundCheckOffset;
+        return Physics.Raycast(origin, Vector3.down, groundCheckDistance);
+    }
+
+    protected virtual void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Vector3 origin = transform.position + groundCheckOffset;
+        Vector3 end = origin + Vector3.down * groundCheckDistance;
+        Gizmos.DrawLine(origin, end);
+        Gizmos.DrawSphere(end, 0.05f);
+
     }
 }

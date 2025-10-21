@@ -34,7 +34,7 @@ public class Slime : BaseSummon
               ));
 
         fsm.AddTwoWayTransition("Chase", "Jump",
-            transition => playerTransform != null && distanceToPlayer <= jumpRange && IsGrounded());
+            transition => target != null && distanceToPlayer <= jumpRange && IsGrounded());
 
         fsm.Init();
     }
@@ -47,9 +47,9 @@ public class Slime : BaseSummon
     // Basic jump function, just changes linear velocity of the rb to the jump vector
     private void Jump()
     {
-        if (playerTransform == null || !IsGrounded()) return;
+        if (target == null || !IsGrounded()) return;
 
-        Vector3 jumpDirection = (playerTransform.position - transform.position).normalized;
+        Vector3 jumpDirection = (target.position - transform.position).normalized;
         jumpDirection.y = 0;
 
         Vector3 jumpVector = (jumpDirection * horizontalJumpForce) + (Vector3.up * verticalJumpForce);
@@ -57,8 +57,4 @@ public class Slime : BaseSummon
         rb.linearVelocity = jumpVector;
     }
 
-    private bool IsGrounded()
-    {
-        return Physics.Raycast(transform.position, Vector3.down, 0.4f);
-    }
 }

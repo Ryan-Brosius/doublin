@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityHFSM;
 
 /* 
- * Owner: Cameron Romeroa
+ * Owner: Cameron Romero
  *
  * Logic for the Necromancer Wizard
  */
@@ -88,9 +88,10 @@ public class Necromancer : BaseEnemy
         fsm.SetStartState("Idle");
 
         fsm.AddTwoWayTransition("Idle", "Attack",
-            transition => playerTransform != null && distanceToPlayer < scanningRange);
+            transition => target != null && distanceToPlayer < scanningRange);
 
         fsm.Init();
+        FindRandomTarget();
     }
 
     // Will cycle through all abilities and reduce their cooldowns
@@ -98,7 +99,11 @@ public class Necromancer : BaseEnemy
     {
         base.Update();
         fsm.OnLogic();
+        UpdateSpellCooldowns();
+    }
 
+    private void UpdateSpellCooldowns()
+    {
         for (int i = 0; i < necromancerAbilities.Count; i++)
         {
             if (necromancerAbilities[i].currentCooldown > 0f)
@@ -120,7 +125,6 @@ public class Necromancer : BaseEnemy
                 boneSpikeActive = false;
             }
         }
-
     }
 
     /*
@@ -138,6 +142,7 @@ public class Necromancer : BaseEnemy
 
             if (ability.currentCooldown <= 0f && spellTimer <= 0f)
             {
+                FindRandomTarget();
                 switch (ability.ability)
                 {
                     case NecromancerAbilities.Ability.summonSlime:
@@ -175,7 +180,7 @@ public class Necromancer : BaseEnemy
         float xOffset = Mathf.Cos(angle) * distance;
         float zOffset = Mathf.Sin(angle) * distance;
 
-        Vector3 spawnOrigin = playerTransform.position + new Vector3(xOffset, 20, zOffset);
+        Vector3 spawnOrigin = target.position + new Vector3(xOffset, 20, zOffset);
 
         RaycastHit hit;
 
@@ -183,7 +188,7 @@ public class Necromancer : BaseEnemy
         {
             return hit.point + hit.normal * 0.05f;
         }
-        return playerTransform.position + new Vector3(xOffset, 0f, zOffset);
+        return target.position + new Vector3(xOffset, 0f, zOffset);
     }
 
     // For the summon spells, each individual summoned entity has their own unique summon point.
@@ -226,7 +231,7 @@ public class Necromancer : BaseEnemy
      */
     private void TriggerBoneSpikes()
     {
-        Vector3 rayStart = playerTransform.position + Vector3.up * 1f;
+        Vector3 rayStart = target.position + Vector3.up * 1f;
         RaycastHit[] hits = Physics.RaycastAll(rayStart, Vector3.down, 20f, groundLayerMask);
         foreach (var hit in hits)
         {
