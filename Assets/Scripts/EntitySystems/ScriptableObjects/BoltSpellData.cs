@@ -5,14 +5,15 @@ public class BoltSpellData : SpellData
 {
     [Header("Bolt Properties")]
     public float speed;
+    public float duration;
 
     public override void Cast(GameObject caster)
     {
-
-        var instance = Instantiate(spellPrefab, caster.transform.position, Quaternion.identity);
+        Vector3 spawnSpot = caster.transform.position + caster.transform.forward;
+        var instance = Instantiate(spellPrefab, spawnSpot, spellPrefab.transform.rotation);
         var spell = instance.GetComponent<ISpell>();
         if (spell is Bolt b)
-                b.Initialize(element, caster, speed);
+                b.Initialize(element, caster, baseDamage, duration, speed);
     }
 
     public override float GetCooldown(){

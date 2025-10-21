@@ -6,7 +6,7 @@ public class Blast : MonoBehaviour, ISpell
 {
     [SerializeField] private Damage damage;
     [SerializeField] private Element element;
-    [SerializeField] private float duration = 1f;
+    [SerializeField] private float duration;
     [SerializeField] private GameObject BoltVFX;
     [SerializeField] private float radius;
 
@@ -20,18 +20,34 @@ public class Blast : MonoBehaviour, ISpell
     private float speed;
 
 
-    public void Initialize(Element elem, GameObject caster, float spd, float rad, GameObject BoltVFX = null)
+    public void Initialize(Element elem, GameObject caster, float baseDmg, float dur, float spd, float rad, GameObject BoltVFX = null)
     {
         element = elem;
         spellCaster = caster;
-        direction = spellCaster.transform.forward;
+        direction = caster.transform.forward;
+        duration = dur;
         speed = spd;
         radius = rad;
+        setDamage(baseDmg, elem, caster);
         StartCoroutine(Fizzle());
     }
 
-    public void Update(){
-        transform.position += this.transform.forward * speed * Time.deltaTime;
+      public void Update(){
+        if (!burst){
+            transform.position += this.transform.forward * speed * Time.deltaTime;  
+        } 
+    }
+
+    public void setDamage(float baseDamage, Element elem, GameObject caster){
+        var spellCaster = caster.GetComponent<ISpellCaster>();
+        float damageNum = baseDamage;
+
+        if (spellCaster.IsBuffed())
+        {
+            damageNum = baseDamage * spellCaster.GetDmgMultiplier();
+        }
+
+        damage = new Damage(damageNum, elem, caster);
     }
 
     IEnumerator Fizzle(){
@@ -39,19 +55,23 @@ public class Blast : MonoBehaviour, ISpell
         StartCoroutine(Burst());
     }
 
-    void onCollisionEnter(Collision collision){
+    void OnCollisionEnter(Collision collision){
         StopCoroutine(Fizzle());
         StartCoroutine(Burst());
-        //Collision.collider.TakeDamage(damage);
+        var health = collision.collider.GetComponent<HealthComponent>();
+        if (health != null)
+            Debug.Log("health component found");
+            Debug.Log(damage.Amount);
+            health.TakeDamage(damage);
     }
 
     private IEnumerator Burst(){
         if (!burst){
+            burst = true;
             transform.localScale += new Vector3(radius, radius, radius);
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.5f);
             Destroy(gameObject);
         }
-        burst = true;
     }
 
 }

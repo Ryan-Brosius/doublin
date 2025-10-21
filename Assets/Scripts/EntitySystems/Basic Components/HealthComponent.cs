@@ -44,5 +44,6 @@ public class HealthComponent : MonoBehaviour, IHealth, IDamageable
     private void Die()
     {
         OnDied?.Invoke();
+        Destroy(gameObject);
     }
 }

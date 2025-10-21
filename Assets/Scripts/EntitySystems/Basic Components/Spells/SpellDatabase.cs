@@ -14,6 +14,9 @@ public class SpellDatabase : SingletonMonobehavior<SpellDatabase>
     public BlastSpellData iceBlast;
     public BarrageSpellData fireBarrage;
     public BarrageSpellData iceBarrage;
+    public BoonSpellData fireBoon;
+    public ShieldSpellData fireShield;
+    public ShieldSpellData iceShield;
     public GameObject spoof;
 
     protected override void Awake()
@@ -24,9 +27,13 @@ public class SpellDatabase : SingletonMonobehavior<SpellDatabase>
             {"Fire Bolt", fireBolt },
             {"Fire Barrage", fireBarrage },
             {"Fire Blast", fireBlast},
+            {"Fire Boon", fireBoon},
+            {"Fire Shield", fireShield},
             {"Ice Bolt", iceBolt },
             {"Ice Barrage", iceBarrage },
             {"Ice Blast", iceBlast },
+            {"Ice Shield", iceShield}
+
             //eventually spoof will be a spelldata
         };
 
@@ -39,7 +46,7 @@ public class SpellDatabase : SingletonMonobehavior<SpellDatabase>
             {"KLI", "Barrage"},
             {"LIJK", "Blast"},
             {"HF", "Shield"},
-            {"GFT", "Boon"}
+            {"JKL", "Boon"}
         };
     }
 

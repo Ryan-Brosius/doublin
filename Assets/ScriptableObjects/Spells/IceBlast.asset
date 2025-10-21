@@ -15,8 +15,9 @@ MonoBehaviour:
   spellName: Ice Blast
   spellType: 0
   element: 2
-  baseDamage: 4
+  baseDamage: 2
   cooldown: 3
   spellPrefab: {fileID: 2480534260677487915, guid: 534d12464d487cf47a248653bd8b5bb1, type: 3}
   speed: 5
+  duration: 2.5
   radius: 10

@@ -15,7 +15,7 @@ MonoBehaviour:
   spellName: Fire Barrage
   spellType: 0
   element: 1
-  baseDamage: 5
+  baseDamage: 2
   cooldown: 3
-  spellPrefab: {fileID: 2042965460561208494, guid: e5bf27651b21f4a4ca86bacc9d220739, type: 3}
+  spellPrefab: {fileID: 3279866035805309996, guid: 62b3d43574fd39a418083bb07813deb9, type: 3}
   speed: 4

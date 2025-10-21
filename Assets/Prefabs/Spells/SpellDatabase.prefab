@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3711615163981137665
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1384576554171304277}
+  - component: {fileID: 7702886707843465332}
+  m_Layer: 0
+  m_Name: SpellDatabase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1384576554171304277
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3711615163981137665}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.99, y: 0, z: 3.139}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7702886707843465332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3711615163981137665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90903ac57da33e945a2ecbe1c40b564a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _persistAcrossScenes: 1
+  fireBolt: {fileID: 11400000, guid: 2a475604abae9c7498b6a392ae293c10, type: 2}
+  iceBolt: {fileID: 11400000, guid: bbf59b84991369848ad3e76c32dd737a, type: 2}
+  fireBlast: {fileID: 11400000, guid: 4a212f820e2edb448ad079e4a4f5c99d, type: 2}
+  iceBlast: {fileID: 11400000, guid: 786b6bbb9d74b1647b9574d6e4696c72, type: 2}
+  fireBarrage: {fileID: 11400000, guid: 21257f42aafb0c34e86694ec906bb8f2, type: 2}
+  iceBarrage: {fileID: 11400000, guid: 8dd2c0f828ec6504ab322703bec65e04, type: 2}
+  fireBoon: {fileID: 11400000, guid: 429976589fa275645b79e1bc7f252dbf, type: 2}
+  fireShield: {fileID: 0}
+  iceShield: {fileID: 0}
+  spoof: {fileID: 3091713888809898568, guid: 8347ba61275597c4698b02b97948fa8a, type: 3}

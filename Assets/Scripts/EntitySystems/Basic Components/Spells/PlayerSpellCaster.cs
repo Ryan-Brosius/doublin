@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerSpellCaster : MonoBehaviour, ISpellCaster
 {
 
-    [SerializeField] private bool isBuffed = false;
+    [SerializeField] private bool dmgBuffed = false;
+    public float dmgBuffMultiplier = 1.5f;
     Dictionary<string, bool> cooldowns = new Dictionary<string, bool>();
     private string incant = "";
     
@@ -14,7 +15,8 @@ public class PlayerSpellCaster : MonoBehaviour, ISpellCaster
     LazyDependency<InputManager> _InputManager;
     LazyDependency<SpellDatabase> _SpellDatabase;
 
-    public bool IsBuffed => isBuffed;
+
+    public bool DmgBuffed => dmgBuffed;
     public Dictionary<string, bool> SpellCooldowns => cooldowns;
 
 
@@ -56,6 +58,26 @@ public class PlayerSpellCaster : MonoBehaviour, ISpellCaster
                 
             incant = "";
         }
+    }
+
+    public bool IsBuffed()
+    {
+        return dmgBuffed;
+    }
+
+    public void SetDmgBuff(bool value)
+    {
+        dmgBuffed = value;
+    }
+
+   
+    public float GetDmgMultiplier()
+    {
+        if(dmgBuffed)
+        {
+            return dmgBuffMultiplier;
+        }
+        return 1f;
     }
 
     private IEnumerator CooldownCounter(string spell, float cooldown)
