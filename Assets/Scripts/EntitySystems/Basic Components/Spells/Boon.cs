@@ -3,14 +3,12 @@ using System.Collections;
 
 public class Boon : MonoBehaviour, ISpell
 {
-    [SerializeField] private Damage damage;
     [SerializeField] private Element element;
     [SerializeField] private float duration;
     [SerializeField] private GameObject BoonVFX;
     [SerializeField] private float speed;
-     [SerializeField, Range(1f, 3f)] private float boonScaleMultiplier = 1.7f;
+    [SerializeField, Range(1f, 3f)] private float boonScaleMultiplier = 1.7f;
 
-    public Damage Damage => damage;
     public Element Element => element;
     public float Duration => duration;
 

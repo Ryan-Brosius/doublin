@@ -1,7 +1,7 @@
 using UnityEngine;
 
 // Spell Type to reference type of spell in the future
-public enum SpellType { Offensive, Defensive }
+public enum SpellType { Offensive, Defensive, Spoof }
 
 
 /*  Owner: Ryan Brosius

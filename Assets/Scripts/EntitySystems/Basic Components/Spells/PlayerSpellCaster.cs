@@ -34,7 +34,7 @@ public class PlayerSpellCaster : MonoBehaviour, ISpellCaster
         
         if (incant.Length > 6)
         {
-            HandleCastSpell("Spoof");
+            HandleCastSpell("Invalid");
             incant = "";
         }
         else if (incant.Length > 3){
@@ -49,28 +49,22 @@ public class PlayerSpellCaster : MonoBehaviour, ISpellCaster
 
     private void HandleCastCancel() 
     {
-        HandleCastSpell("Spoof");
+        HandleCastSpell("Cancel");
         incant = "";
     }
 
     private void HandleCastSpell(string spell)
     {
-        if (spell.Equals("Spoof")){
-            Instantiate(spoof, gameObject.transform);
+        if (!cooldowns.ContainsKey(spell))
+            cooldowns.Add(spell, false);
+        if (!cooldowns[spell]){
+            _SpellDatabase.Value.GetSpell(spell).Cast(this.gameObject);
+            cooldowns[spell] = true;
+            StartCoroutine(CooldownCounter(spell, _SpellDatabase.Value.GetSpell(spell).GetCooldown()));
+        } else {
+            _SpellDatabase.Value.GetSpell("Cooldown").Cast(this.gameObject);
         }
-        else if (!spell.Equals("Invalid")){
-            if (!cooldowns.ContainsKey(spell))
-                cooldowns.Add(spell, false);
-            if (!cooldowns[spell]){
-                _SpellDatabase.Value.GetSpell(spell).Cast(this.gameObject);
-                cooldowns[spell] = true;
-                StartCoroutine(CooldownCounter(spell, _SpellDatabase.Value.GetSpell(spell).GetCooldown()));
-            } else {
-                Instantiate(spoof, gameObject.transform);
-            }
-                
-            incant = "";
-        }
+        incant = "";
     }
 
     public bool IsBuffed()

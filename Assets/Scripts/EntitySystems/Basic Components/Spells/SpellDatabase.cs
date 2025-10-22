@@ -17,7 +17,9 @@ public class SpellDatabase : SingletonMonobehavior<SpellDatabase>
     public BoonSpellData fireBoon;
     public ShieldSpellData fireShield;
     public ShieldSpellData iceShield;
-    public GameObject spoof;
+    public SpoofData invalidSpoof;
+    public SpoofData cancelSpoof;
+    public SpoofData cooldownSpoof;
 
     protected override void Awake()
     {
@@ -32,7 +34,11 @@ public class SpellDatabase : SingletonMonobehavior<SpellDatabase>
             {"Ice Bolt", iceBolt },
             {"Ice Barrage", iceBarrage },
             {"Ice Blast", iceBlast },
-            {"Ice Shield", iceShield}
+            {"Ice Shield", iceShield},
+
+            {"Invalid", invalidSpoof},
+            {"Cancel", cancelSpoof},
+            {"Cooldown", cooldownSpoof}
 
             //eventually spoof will be a spelldata
         };
@@ -64,7 +70,6 @@ public class SpellDatabase : SingletonMonobehavior<SpellDatabase>
     public SpellData GetSpell(string spell)
     {
         SpellData spellObject = null;
-        //eventually spoof
         SpellList.TryGetValue(spell, out spellObject);
         return spellObject;
     }

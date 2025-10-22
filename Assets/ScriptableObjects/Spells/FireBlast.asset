@@ -20,4 +20,4 @@ MonoBehaviour:
   spellPrefab: {fileID: 7272164428138288433, guid: 13e0721be2790ba43afab7cd472215a3, type: 3}
   speed: 5
   duration: 2.5
-  radius: 10
+  radius: 7

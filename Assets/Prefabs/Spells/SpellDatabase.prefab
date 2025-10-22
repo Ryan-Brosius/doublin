@@ -54,4 +54,6 @@ MonoBehaviour:
   fireBoon: {fileID: 11400000, guid: 429976589fa275645b79e1bc7f252dbf, type: 2}
   fireShield: {fileID: 0}
   iceShield: {fileID: 0}
-  spoof: {fileID: 3091713888809898568, guid: 8347ba61275597c4698b02b97948fa8a, type: 3}
+  invalidSpoof: {fileID: 11400000, guid: 3dd74fcbaa68ee44ab66eb5d5b811adc, type: 2}
+  cancelSpoof: {fileID: 11400000, guid: 8ef9d12a4197489408186a2fbb215bb8, type: 2}
+  cooldownSpoof: {fileID: 11400000, guid: 339d450f5073c28479a76420585065c0, type: 2}
