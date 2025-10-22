@@ -15,7 +15,7 @@ using static InputManager;
 public class CameraManager : SingletonMonobehavior<CameraManager>
 {
     [Header("Unity Cameras")]
-    [SerializeField] private Camera combinedCamera;
+    //[SerializeField] private Camera combinedCamera;
     [SerializeField] private Camera grimoireCamera;
     [SerializeField] private Camera staffCamera;
     private List<Camera> cameras;
@@ -54,7 +54,7 @@ public class CameraManager : SingletonMonobehavior<CameraManager>
 
         cameras = new List<Camera>()
         {
-            combinedCamera,
+            //combinedCamera,
             grimoireCamera,
             staffCamera,
         };
@@ -136,6 +136,10 @@ public class CameraManager : SingletonMonobehavior<CameraManager>
         switch (state)
         {
             case GoblinState.Separated:
+                combinedCameraCinemachine.Priority = LOW_PRIORITY;
+                grimoireCameraCinemachine.Priority = LOW_PRIORITY;
+                staffCameraCinemachine.Priority = LOW_PRIORITY;
+                targetGroupCameraCinemachine.Priority = HIGH_PRIORITY;
                 HandleSeparatedState();
                 break;
 

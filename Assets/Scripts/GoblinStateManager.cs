@@ -14,4 +14,108 @@ public class GoblinStateManager : SingletonMonobehavior<GoblinStateManager>
     [SerializeField] private GameObject CombinedGoblin;
     [SerializeField] private GameObject GrimoireGoblin;
     [SerializeField] private GameObject StaffGoblin;
+
+    [Header("Goblin Controller References")]
+    [SerializeField] private CombinedGoblinController CombinedGoblinController;
+    [SerializeField] private SplitGoblinController GrimoireGoblinController;
+    [SerializeField] private SplitGoblinController StaffGoblinController;
+
+    [Header("Goblin Mesh GameObjects")]
+    [SerializeField] public GameObject GrimoireGoblinMesh;
+    [SerializeField] public GameObject StaffGoblinMesh;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        CurrentGoblinState.Subscribe(ConfigureControllers);
+    }
+
+    public float DistanceBetweenGoblins()
+    {
+        return Vector3.Distance(CombinedGoblin.transform.position, GrimoireGoblin.transform.position);
+    }
+
+    public void CombineGoblins(GoblinState newGoblinState)
+    {
+        CurrentGoblinState.Value = newGoblinState;
+    }
+
+    public void SeperateGoblins()
+    {
+        CurrentGoblinState.Value = GoblinState.Separated;
+    }
+
+    public void ConfigureControllers(GoblinState goblinState)
+    {
+        CombinedGoblin.SetActive(false);
+        GrimoireGoblin.SetActive(false);
+        StaffGoblin.SetActive(false);
+
+        switch (goblinState)
+        {
+            case GoblinState.Separated:
+
+                GrimoireGoblin.SetActive(true);
+                StaffGoblin.SetActive(true);
+                break;
+            case GoblinState.StaffTop:
+            case GoblinState.BookTop:
+                CombinedGoblin.SetActive(true);
+                break;
+        }
+    }
+
+    public GameObject GetBottomGoblin()
+    {
+        switch (CurrentGoblinState.Value)
+        {
+            case GoblinState.StaffTop:
+                return GrimoireGoblin;
+            case GoblinState.BookTop:
+                return StaffGoblin;
+        }
+        return null;
+    }
+
+    public GameObject GetTopGoblin()
+    {
+        switch (CurrentGoblinState.Value)
+        {
+            case GoblinState.StaffTop:
+                return StaffGoblin;
+            case GoblinState.BookTop:
+                return GrimoireGoblin;
+        }
+        return null;
+    }
+
+    public GameObject GetBottomGoblinMesh()
+    {
+        switch (CurrentGoblinState.Value)
+        {
+            case GoblinState.StaffTop:
+                return GrimoireGoblinMesh;
+            case GoblinState.BookTop:
+                return StaffGoblinMesh;
+        }
+        return null;
+    }
+
+    public GameObject GetTopGoblinMesh()
+    {
+        switch (CurrentGoblinState.Value)
+        {
+            case GoblinState.StaffTop:
+                return StaffGoblinMesh;
+            case GoblinState.BookTop:
+                return GrimoireGoblinMesh;
+        }
+        return null;
+    }
+
+    public void ThrowGoblin(GameObject goblin, Vector3 direction, float force)
+    {
+        var goblinController = goblin.GetComponent<SplitGoblinController>();
+        goblinController.ThrowGoblin(direction, force);
+    }
 }
