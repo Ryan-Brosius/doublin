@@ -221,4 +221,17 @@ public class CombinedGoblinController : MonoBehaviour
                 break;
         }
     }
+
+    public void TeleportToPosition(Vector3 newPosition)
+    {
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+
+        rb.position = newPosition;
+
+        transform.position = newPosition;
+
+        velocity = Vector3.zero;
+        currentMove = Vector2.zero;
+    }
 }
