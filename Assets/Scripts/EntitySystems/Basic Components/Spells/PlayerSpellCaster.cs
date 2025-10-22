@@ -11,6 +11,7 @@ public class PlayerSpellCaster : MonoBehaviour, ISpellCaster
     private string incant = "";
     
     public GameObject spoof;
+    private string currentSpell = "Spoof";
 
     LazyDependency<InputManager> _InputManager;
     LazyDependency<SpellDatabase> _SpellDatabase;
@@ -23,6 +24,8 @@ public class PlayerSpellCaster : MonoBehaviour, ISpellCaster
     void Start()
     {
         _InputManager.Value.OnGrimoireIncant += HandleInput;
+        _InputManager.Value.OnStaffCast += HandleCastConfirm;
+        _InputManager.Value.OnStaffCancelIncant += HandleCastCancel;
     }
 
     private void HandleInput(string c)
@@ -35,9 +38,19 @@ public class PlayerSpellCaster : MonoBehaviour, ISpellCaster
             incant = "";
         }
         else if (incant.Length > 3){
-            string spell = _SpellDatabase.Value.ConvertInput(incant);
-            HandleCastSpell(spell);
+            currentSpell = _SpellDatabase.Value.ConvertInput(incant);
         }
+    }
+
+    private void HandleCastConfirm()
+    {
+        HandleCastSpell(currentSpell);
+    }
+
+    private void HandleCastCancel() 
+    {
+        HandleCastSpell("Spoof");
+        incant = "";
     }
 
     private void HandleCastSpell(string spell)

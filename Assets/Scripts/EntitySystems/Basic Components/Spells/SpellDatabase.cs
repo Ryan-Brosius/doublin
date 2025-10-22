@@ -52,15 +52,12 @@ public class SpellDatabase : SingletonMonobehavior<SpellDatabase>
 
     public string ConvertInput(string input){
         string element = input.Substring(0, 2).ToUpper();
-        Debug.Log("Element " + element);
         string spellType = input.Substring(2).ToUpper();
-        Debug.Log("Spell Type " + spellType);
         string spellKey = "Invalid";
         if (RuneList.ContainsKey(element) && RuneList.ContainsKey(spellType))
         {
             spellKey = RuneList[element] + " " + RuneList[spellType];
         }
-        Debug.Log(spellKey);
         return spellKey;
     }
 
