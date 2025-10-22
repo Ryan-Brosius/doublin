@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: AimingSettings
   m_EditorClassIdentifier: Assembly-CSharp::AimingSettings
-  maxRange: 30
+  maxRange: 40
   aimConeAngle: 5
   targetLayers:
     serializedVersion: 2
