@@ -20,10 +20,6 @@ public class GoblinStateManager : SingletonMonobehavior<GoblinStateManager>
     [SerializeField] private SplitGoblinController GrimoireGoblinController;
     [SerializeField] private SplitGoblinController StaffGoblinController;
 
-    [Header("Goblin Mesh GameObjects")]
-    [SerializeField] public GameObject GrimoireGoblinMesh;
-    [SerializeField] public GameObject StaffGoblinMesh;
-
     protected override void Awake()
     {
         base.Awake();
@@ -85,30 +81,6 @@ public class GoblinStateManager : SingletonMonobehavior<GoblinStateManager>
                 return StaffGoblin;
             case GoblinState.BookTop:
                 return GrimoireGoblin;
-        }
-        return null;
-    }
-
-    public GameObject GetBottomGoblinMesh()
-    {
-        switch (CurrentGoblinState.Value)
-        {
-            case GoblinState.StaffTop:
-                return GrimoireGoblinMesh;
-            case GoblinState.BookTop:
-                return StaffGoblinMesh;
-        }
-        return null;
-    }
-
-    public GameObject GetTopGoblinMesh()
-    {
-        switch (CurrentGoblinState.Value)
-        {
-            case GoblinState.StaffTop:
-                return StaffGoblinMesh;
-            case GoblinState.BookTop:
-                return GrimoireGoblinMesh;
         }
         return null;
     }
