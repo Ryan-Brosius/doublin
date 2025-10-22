@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9116987274793024824}
   - component: {fileID: 867522681407715177}
   - component: {fileID: 9032975846664113746}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -67,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 900930a82c2b99b42bb1257b3abb5556, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -128,6 +128,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e0ed65c31c51431b8f6b0e06b2adf77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundCheckDistance: 0.4
+  groundCheckOffset: {x: 0, y: 0, z: 0}
   scanningRange: 30
   maxHealth: 1
   moveSpeed: 3

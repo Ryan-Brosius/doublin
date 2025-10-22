@@ -66,7 +66,7 @@ public class Necromancer : BaseEnemy
     private Quaternion boneSpikeTargetRotation;
     private Vector3 boneSpikeTargetOffset;
 
-    private int groundLayerMask = 1 << 3;
+    [SerializeField] LayerMask groundLayerMask;
 
     protected override void Awake()
     {

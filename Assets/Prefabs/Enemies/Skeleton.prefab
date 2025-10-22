@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6051493357665627410}
   - component: {fileID: 724351295331718785}
   - component: {fileID: 6408481461612669661}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -67,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 341d35b3a73d45448ad98b07e4445945, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -151,6 +151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3ea9acff32c64b4faf7e0a82c69a3bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundCheckDistance: 0.4
+  groundCheckOffset: {x: 0, y: 0, z: 0}
   scanningRange: 30
   maxHealth: 3
   moveSpeed: 3.5

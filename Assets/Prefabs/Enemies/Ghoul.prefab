@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2621214347109789945}
   - component: {fileID: 6661909366183208012}
   - component: {fileID: 1626260098948316642}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ghoul
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -67,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 2da4c04adddeba541a39c30c7b62f905, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -151,6 +151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 340d91b98b6a74418bce09600587f66f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundCheckDistance: 0.4
+  groundCheckOffset: {x: 0, y: 0, z: 0}
   scanningRange: 30
   maxHealth: 10
   moveSpeed: 2
