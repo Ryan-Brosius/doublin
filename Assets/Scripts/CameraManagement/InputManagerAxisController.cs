@@ -40,11 +40,15 @@ public class InputManagerAxisController : InputAxisControllerBase<InputManagerAx
             if (!_InputManager.IsResolvable())
                 return 0f;
 
-            if (!gotAction)
+            if (!gotAction && _InputManager.IsResolvable())
             {
-                _InputManager.Value.OnGrimoireLook += v => { if (inputSource == InputSource.Grimoire) _latestLook = v; };
-                _InputManager.Value.OnStaffLook += v => { if (inputSource == InputSource.Staff) _latestLook = v; };
-                _InputManager.Value.OnCombinedLook += v => { if (inputSource == InputSource.Combined) _latestLook = v; };
+                _InputManager.Value.OnGrimoireLook -= OnGrimoireLook;
+                _InputManager.Value.OnStaffLook -= OnStaffLook;
+                _InputManager.Value.OnCombinedLook -= OnCombinedLook;
+
+                _InputManager.Value.OnGrimoireLook += OnGrimoireLook;
+                _InputManager.Value.OnStaffLook += OnStaffLook;
+                _InputManager.Value.OnCombinedLook += OnCombinedLook;
                 gotAction = true;
             }
 
@@ -57,6 +61,21 @@ public class InputManagerAxisController : InputAxisControllerBase<InputManagerAx
             }
 
             return change;
+        }
+
+        private void OnGrimoireLook(Vector2 v)
+        {
+            if (inputSource == InputSource.Grimoire) _latestLook = v;
+        }
+
+        private void OnStaffLook(Vector2 v)
+        {
+            if (inputSource == InputSource.Staff) _latestLook = v;
+        }
+
+        private void OnCombinedLook(Vector2 v)
+        {
+            if (inputSource == InputSource.Combined) _latestLook = v;
         }
     }
 }
