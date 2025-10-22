@@ -1,7 +1,7 @@
 using UnityEngine;
 
 // Spell Type to reference type of spell in the future
-public enum SpellType { Offensive, Defensive }
+public enum SpellType { Offensive, Defensive, Spoof }
 
 
 /*  Owner: Ryan Brosius
@@ -24,5 +24,9 @@ public abstract class SpellData : ScriptableObject
     public GameObject spellPrefab;
 
     // Should derive from this to instantiate the spell itself
-    public abstract void Cast(GameObject caster);
+    public abstract void Cast(GameObject caster, GameObject target=null);
+
+    public virtual float GetCooldown(){
+        return cooldown;
+    }
 }

@@ -13,7 +13,7 @@ public class ShieldSpellData : SpellData
     public ElementalResolver elementalResolver;
     public GameObject ShieldVFX;
 
-    public override void Cast(GameObject caster)
+    public override void Cast(GameObject caster, GameObject target=null)
     {
         var bearer = caster.GetComponent<IShieldBearer>();
         if (bearer == null) return;
