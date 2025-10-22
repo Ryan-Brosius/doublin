@@ -20,7 +20,6 @@ public class AimingReticleView : MonoBehaviour
         else
         {
             Vector3 screenPos = playerCamera.WorldToScreenPoint(target.position);
-            Debug.Log(screenPos);
             reticleTransform.position = screenPos;
             reticleTransform.Rotate(Vector3.forward, settings.reticleSpinSpeed * Time.deltaTime);
         }
