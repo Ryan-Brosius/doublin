@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: AimingSettings
+  m_EditorClassIdentifier: Assembly-CSharp::AimingSettings
+  maxRange: 40
+  aimConeAngle: 5
+  targetLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  obstructionLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  switchTargetCooldown: 0.25
+  reticleSpinSpeed: 180
+  maxTargets: 64
+  showDebugGizmos: 1
