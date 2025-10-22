@@ -19,18 +19,30 @@ public class Bolt : MonoBehaviour, ISpell
     private float speed;
 
 
-    public void Initialize(Element elem, GameObject caster, float baseDmg, float dur, float spd, GameObject BoltVFX = null)
+    public void Initialize(Element elem, GameObject caster, GameObject target, float baseDmg, float dur, float spd, GameObject BoltVFX = null)
     {
         element = elem;
         spellCaster = caster;
         direction = caster.transform.forward;
         duration = dur;
         speed = spd;
-        setDamage(baseDmg, elem, caster);
+        SetDirection(target);
+        SetDamage(baseDmg, elem, caster);
         StartCoroutine(Fizzle());
     }
 
-    public void setDamage(float baseDamage, Element elem, GameObject caster){
+    private void SetDirection(GameObject target)
+    {
+        if (target){
+            direction = Vector3.Normalize(target.transform.position - transform.position);
+        }
+        else 
+        {
+            direction = spellCaster.transform.forward;
+        }
+    }
+
+    public void SetDamage(float baseDamage, Element elem, GameObject caster){
         var spellCaster = caster.GetComponent<ISpellCaster>();
         float damageNum = baseDamage;
 
@@ -43,7 +55,7 @@ public class Bolt : MonoBehaviour, ISpell
     }
 
     public void Update(){
-        transform.position += this.transform.forward * speed * Time.deltaTime;
+        transform.position += direction * speed * Time.deltaTime;
     }
 
     IEnumerator Fizzle(){

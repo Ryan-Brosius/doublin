@@ -8,7 +8,7 @@ public class BoonSpellData : SpellData
     public float rotationSpeed;
     public float duration;
 
-    public override void Cast(GameObject caster)
+    public override void Cast(GameObject caster, GameObject target = null)
     {
         var instance = Instantiate(spellPrefab, caster.transform);
         var spell = instance.GetComponent<ISpell>();

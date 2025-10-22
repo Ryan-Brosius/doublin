@@ -60,6 +60,7 @@ public class SpellDatabase : SingletonMonobehavior<SpellDatabase>
         {
             spellKey = RuneList[element] + " " + RuneList[spellType];
         }
+        Debug.Log(spellKey);
         return spellKey;
     }
 

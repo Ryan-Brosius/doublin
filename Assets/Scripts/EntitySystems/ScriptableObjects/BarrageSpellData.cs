@@ -6,7 +6,7 @@ public class BarrageSpellData : SpellData
     [Header("Barrage Properties")]
     public float speed;
 
-    public override void Cast(GameObject caster)
+    public override void Cast(GameObject caster, GameObject target = null)
     {
 
         var instance = Instantiate(spellPrefab, caster.transform.position, Quaternion.identity);
