@@ -46,7 +46,7 @@ public class SpellDatabase : SingletonMonobehavior<SpellDatabase>
             {"KLI", "Barrage"},
             {"LIJK", "Blast"},
             {"HF", "Shield"},
-            {"JKL", "Boon"}
+            {"GFT", "Boon"}
         };
     }
 
