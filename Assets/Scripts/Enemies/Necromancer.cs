@@ -66,8 +66,6 @@ public class Necromancer : BaseEnemy
     private Quaternion boneSpikeTargetRotation;
     private Vector3 boneSpikeTargetOffset;
 
-    [SerializeField] LayerMask groundLayerMask;
-
     protected override void Awake()
     {
         base.Awake();
@@ -95,11 +93,17 @@ public class Necromancer : BaseEnemy
     }
 
     // Will cycle through all abilities and reduce their cooldowns
-    void Update()
+    protected override void Update()
     {
         base.Update();
         fsm.OnLogic();
         UpdateSpellCooldowns();
+        ReduceSpellBuffer();
+    }
+
+    private void ReduceSpellBuffer()
+    {
+        spellBuffer -= Time.deltaTime;
     }
 
     private void UpdateSpellCooldowns()
@@ -140,7 +144,7 @@ public class Necromancer : BaseEnemy
         {
             var ability = necromancerAbilities[i];
 
-            if (ability.currentCooldown <= 0f && spellTimer <= 0f)
+            if (ability.currentCooldown <= 0f && spellTimer <= 0f && spellBuffer <= 0)
             {
                 FindRandomTarget();
                 switch (ability.ability)

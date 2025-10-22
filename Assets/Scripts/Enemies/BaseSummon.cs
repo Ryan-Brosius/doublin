@@ -18,6 +18,8 @@ using UnityHFSM;
 public class BaseSummon : BaseEnemy
 {
     [SerializeField] protected float moveSpeed = 3f;
+    [SerializeField] protected float climbSpeed = 0.1f;
+    private bool isClimbing;
     protected override void Awake()
     {
         base.Awake();
@@ -39,7 +41,24 @@ public class BaseSummon : BaseEnemy
         base.Update();
         fsm.OnLogic();
         FindClosestTarget();
-        Debug.Log(target);
+
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit wallhit, 1f, groundLayerMask))
+        {
+            isClimbing = true;
+        }
+        else
+        {
+            if (isClimbing == true)
+            {
+                rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+            }
+            isClimbing = false;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (isClimbing) WallClimb();
     }
 
     protected void Chase()
@@ -48,5 +67,10 @@ public class BaseSummon : BaseEnemy
 
         Vector3 direction = (target.position - transform.position).normalized;
         rb.linearVelocity = new Vector3(direction.x * moveSpeed, rb.linearVelocity.y, direction.z * moveSpeed);
+    }
+
+    private void WallClimb()
+    {
+        rb.linearVelocity = new Vector3(0f, climbSpeed, 0f);
     }
 }

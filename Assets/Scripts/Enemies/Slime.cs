@@ -39,7 +39,7 @@ public class Slime : BaseSummon
         fsm.Init();
     }
 
-    protected void Update()
+    protected override void Update()
     {
         base.Update();
     }

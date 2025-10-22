@@ -27,6 +27,8 @@ public class BaseEnemy : MonoBehaviour
 
     protected StateMachine fsm;
 
+    [SerializeField] protected LayerMask groundLayerMask;
+
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody>();
