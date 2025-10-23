@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UIElements;
 
 public class Barrage :  MonoBehaviour, ISpell
 {
@@ -17,8 +18,9 @@ public class Barrage :  MonoBehaviour, ISpell
     private float speed;
 
 
-    public void Initialize(Element elem, GameObject caster, float spd, GameObject BoltVFX = null)
+    public void Initialize(Element elem, GameObject caster, Vector3 target, float spd, GameObject BoltVFX = null)
     {
+        SetDirection(target);
         element = elem;
         spellCaster = caster;
         direction = spellCaster.transform.forward;
@@ -35,9 +37,9 @@ public class Barrage :  MonoBehaviour, ISpell
         Destroy(gameObject);
     }
 
-    void onCollisionEnter(Collision collision){
-        StopCoroutine(Fizzle());
-        Destroy(gameObject);
+    private void SetDirection(Vector3 target)
+    {
+        transform.LookAt(target);
+        direction = transform.forward;
     }
-   
 }

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 9116987274793024824}
   - component: {fileID: 867522681407715177}
   - component: {fileID: 9032975846664113746}
+  - component: {fileID: 2335161932051857250}
   m_Layer: 6
   m_Name: Slime
   m_TagString: Untagged
@@ -132,7 +133,11 @@ MonoBehaviour:
   groundCheckOffset: {x: 0, y: 0, z: 0}
   scanningRange: 30
   maxHealth: 1
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
   moveSpeed: 3
+  climbSpeed: 0.1
   horizontalJumpForce: 2
   verticalJumpForce: 4
   jumpRange: 3
@@ -157,3 +162,16 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2335161932051857250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1780739345498017388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5797710f7bb31140a1956b3a595b40b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 1

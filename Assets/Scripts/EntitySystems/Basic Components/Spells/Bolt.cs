@@ -9,7 +9,7 @@ public class Bolt : OffensiveSpell
 
     private float speed;
 
-    public void Initialize(Element elem, GameObject caster, GameObject target, float baseDmg, float dur, float spd, GameObject BoltVFX = null)
+    public void Initialize(Element elem, GameObject caster, Vector3 target, float baseDmg, float dur, float spd, GameObject BoltVFX = null)
     {
         base.Initialize(elem, caster, target, baseDmg, dur);
         speed = spd;
@@ -20,6 +20,4 @@ public class Bolt : OffensiveSpell
     {
         transform.position += direction * speed * Time.deltaTime;
     }
-
-   
 }

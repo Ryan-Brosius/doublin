@@ -51,7 +51,7 @@ public class SpellDatabase : SingletonMonobehavior<SpellDatabase>
             {"JL", "Bolt"},
             {"KLI", "Barrage"},
             {"LIJK", "Blast"},
-            {"HF", "Shield"},
+            {"LJ", "Shield"},
             {"GFT", "Boon"}
         };
     }
@@ -60,7 +60,7 @@ public class SpellDatabase : SingletonMonobehavior<SpellDatabase>
         string element = input.Substring(0, 2).ToUpper();
         string spellType = input.Substring(2).ToUpper();
         string spellKey = "Invalid";
-        if (RuneList.ContainsKey(element) && RuneList.ContainsKey(spellType))
+        if (RuneList.ContainsKey(element) && RuneList.ContainsKey(spellType) && SpellList.ContainsKey($"{RuneList[element]} {RuneList[spellType]}"))
         {
             spellKey = RuneList[element] + " " + RuneList[spellType];
         }

@@ -7,16 +7,22 @@ public class BoltSpellData : SpellData
     public float speed;
     public float duration;
 
-    public override void Cast(GameObject caster, GameObject target=null)
+    public override void Cast(GameObject caster, Vector3 spawnPosition, GameObject target=null, Vector3? positionTarget = null)
     {
-        Vector3 spawnSpot = caster.transform.position + caster.transform.forward;
-        var instance = Instantiate(spellPrefab, spawnSpot, spellPrefab.transform.rotation);
+        var instance = Instantiate(spellPrefab, spawnPosition, spellPrefab.transform.rotation);
         var spell = instance.GetComponent<ISpell>();
         if (spell is Bolt b)
-                b.Initialize(element, caster, target, baseDamage, duration, speed);
+        {
+            if (target != null)
+                b.Initialize(element, caster, target.transform.position, baseDamage, duration, speed);
+            else if (positionTarget != null)
+                b.Initialize(element, caster, positionTarget.Value, baseDamage, duration, speed);
+            else
+                b.Initialize(element, caster, caster.transform.position, baseDamage, duration, speed);
+        }
     }
 
     public override float GetCooldown(){
-        return 12f;
+        return cooldown;
     }
 }

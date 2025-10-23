@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6051493357665627410}
   - component: {fileID: 724351295331718785}
   - component: {fileID: 6408481461612669661}
+  - component: {fileID: 860719853636130759}
   m_Layer: 6
   m_Name: Skeleton
   m_TagString: Untagged
@@ -155,4 +156,21 @@ MonoBehaviour:
   groundCheckOffset: {x: 0, y: 0, z: 0}
   scanningRange: 30
   maxHealth: 3
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
   moveSpeed: 3.5
+  climbSpeed: 0.1
+--- !u!114 &860719853636130759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780196705694818556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5797710f7bb31140a1956b3a595b40b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 3

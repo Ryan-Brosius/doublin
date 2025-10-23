@@ -26,17 +26,21 @@ public class AimingManager : SingletonMonobehavior<AimingManager>
     [SerializeField] private Camera playerCamera;
     [SerializeField] private AimingSettings settings;
 
-    private Transform currentTarget;
+    private Transform currentTarget = null;
+    private Vector3 crosshairPosition;
     private float lastSwitchTime = 0f;
     private readonly Collider[] targetBuffer = new Collider[64];
 
     public Transform CurrentTarget => currentTarget;
+    public Vector3 CrosshairPosition => crosshairPosition;
 
     private void Update()
     {
         // Lets go baby run the check
         if (Time.time - lastSwitchTime > settings.switchTargetCooldown)
             FindTarget();
+
+        UpdateCrosshairPosition();
     }
 
     private void FindTarget()
@@ -89,6 +93,21 @@ public class AimingManager : SingletonMonobehavior<AimingManager>
             currentTarget = bestTarget;
         }
         lastSwitchTime = Time.time;
+    }
+
+    private void UpdateCrosshairPosition()
+    {
+        Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, 50f, settings.obstructionLayer))
+        {
+            crosshairPosition = hit.point;
+        }
+        else
+        {
+            crosshairPosition = playerCamera.transform.position + playerCamera.transform.forward * 50f;
+        }
     }
 
     private void OnDrawGizmos()

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2660607625018152244}
   - component: {fileID: 4366024908855856005}
   m_Layer: 0
-  m_Name: FireShield
+  m_Name: IceShield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,11 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea292d67d2f3b7a4c9eb738f44c566ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shieldHealth: 10
-  element: 1
+  shieldHealth: 12
+  element: 2
   resolver: {fileID: 11400000, guid: 3de7dfc2ba88a884b8ae4f9e6679d366, type: 2}
   ShieldVFX: {fileID: 8931654832646940736}
-  shieldScaleMultiplier: 1.5
+  shieldScaleMultiplier: 1.3
 --- !u!1 &8931654832646940736
 GameObject:
   m_ObjectHideFlags: 0
@@ -62,7 +62,7 @@ GameObject:
   - component: {fileID: 2921578032044763780}
   - component: {fileID: 2225751185043049736}
   m_Layer: 0
-  m_Name: FireShield
+  m_Name: IceShieldVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -114,7 +114,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c5ef2b1ddbe181241aa43c57bf50b9f4, type: 2}
+  - {fileID: 2100000, guid: 92b28bcab69a182499e8b778fbb7133c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

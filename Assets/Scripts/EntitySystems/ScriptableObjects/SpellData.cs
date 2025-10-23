@@ -24,7 +24,8 @@ public abstract class SpellData : ScriptableObject
     public GameObject spellPrefab;
 
     // Should derive from this to instantiate the spell itself
-    public abstract void Cast(GameObject caster, GameObject target=null);
+    // If default target is null, default to positionTarget, if that is null default to whatever makes the most sense
+    public abstract void Cast(GameObject caster, Vector3 spawnPosition, GameObject target=null, Vector3? positionTarget=null);
 
     public virtual float GetCooldown(){
         return cooldown;

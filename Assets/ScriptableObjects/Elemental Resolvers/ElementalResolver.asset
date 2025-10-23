@@ -13,6 +13,15 @@ MonoBehaviour:
   m_Name: ElementalResolver
   m_EditorClassIdentifier: 
   reactions:
-  - Attacker: 0
-    Defender: 0
-    Multiplier: 0
+  - Attacker: 1
+    Defender: 2
+    Multiplier: 2
+  - Attacker: 2
+    Defender: 1
+    Multiplier: 2
+  - Attacker: 1
+    Defender: 1
+    Multiplier: 0.5
+  - Attacker: 2
+    Defender: 2
+    Multiplier: 0.5

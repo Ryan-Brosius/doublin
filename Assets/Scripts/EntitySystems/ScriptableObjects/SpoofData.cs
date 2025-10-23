@@ -14,9 +14,9 @@ public class SpoofData : SpellData
     [Header("Spoof Info")]
     public SpoofType spoofType;
 
-    public override void Cast(GameObject caster, GameObject target=null)
+    public override void Cast(GameObject caster, Vector3 spawnPosition, GameObject target=null, Vector3? positionTarget = null)
     {
-        Instantiate(spellPrefab, caster.transform);
+        Instantiate(spellPrefab, spawnPosition, Quaternion.identity);
     }
 
     public override float GetCooldown(){

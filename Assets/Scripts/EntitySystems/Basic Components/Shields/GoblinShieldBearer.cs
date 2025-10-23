@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 
@@ -26,7 +27,15 @@ public class GoblinShieldBearer : MonoBehaviour, IShieldBearer
         ActiveShield = newShield;
     }
 
-    public void ClearShield() => ActiveShield = null;
+    public void ClearShield()
+    {
+        ActiveShield = null;
+
+        foreach (var shield in GetComponentsInChildren<MonoBehaviour>(true).OfType<IShield>())
+        {
+            shield.Break();
+        }
+    }
 
     public void TakeDamage(Damage damage)
     {

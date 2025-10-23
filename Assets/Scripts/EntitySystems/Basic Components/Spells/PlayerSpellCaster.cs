@@ -13,8 +13,12 @@ public class PlayerSpellCaster : MonoBehaviour, ISpellCaster
     public GameObject spoof;
     private string currentSpell = "Spoof";
 
+    [Tooltip("Optional cast point where the spell will be cast from")]
+    [SerializeField] private GameObject castPoint;
+
     LazyDependency<InputManager> _InputManager;
     LazyDependency<SpellDatabase> _SpellDatabase;
+    LazyDependency<AimingManager> _AimingManager;
 
 
     public bool DmgBuffed => dmgBuffed;
@@ -45,6 +49,7 @@ public class PlayerSpellCaster : MonoBehaviour, ISpellCaster
     private void HandleCastConfirm()
     {
         HandleCastSpell(currentSpell);
+        incant = "";
     }
 
     private void HandleCastCancel() 
@@ -58,11 +63,22 @@ public class PlayerSpellCaster : MonoBehaviour, ISpellCaster
         if (!cooldowns.ContainsKey(spell))
             cooldowns.Add(spell, false);
         if (!cooldowns[spell]){
-            _SpellDatabase.Value.GetSpell(spell).Cast(this.gameObject);
-            cooldowns[spell] = true;
-            StartCoroutine(CooldownCounter(spell, _SpellDatabase.Value.GetSpell(spell).GetCooldown()));
+            var spellData = _SpellDatabase.Value.GetSpell(spell);
+            if (spellData != null)
+            {
+                spellData.Cast(
+                    gameObject,
+                    castPoint != null ? castPoint.transform.position : gameObject.transform.position,
+                    positionTarget: _AimingManager.Value.CurrentTarget != null ? _AimingManager.Value.CurrentTarget.transform.position : _AimingManager.Value.CrosshairPosition
+                );
+                cooldowns[spell] = true;
+                StartCoroutine(CooldownCounter(spell, _SpellDatabase.Value.GetSpell(spell).GetCooldown()));
+            }
         } else {
-            _SpellDatabase.Value.GetSpell("Cooldown").Cast(this.gameObject);
+            _SpellDatabase.Value.GetSpell("Cooldown").Cast(
+                gameObject,
+                castPoint != null ? castPoint.transform.position : gameObject.transform.position
+            );
         }
         incant = "";
     }
@@ -77,7 +93,6 @@ public class PlayerSpellCaster : MonoBehaviour, ISpellCaster
         dmgBuffed = value;
     }
 
-   
     public float GetDmgMultiplier()
     {
         if(dmgBuffed)

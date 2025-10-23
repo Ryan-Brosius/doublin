@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8900422340962125199}
   - component: {fileID: 4862546270278693015}
   - component: {fileID: 8963848419344905833}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: IceBlast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   element: 0
   duration: 2
-  BoltVFX: {fileID: 0}
+  BlastVFX: {fileID: 0}
   radius: 5
 --- !u!54 &8963848419344905833
 Rigidbody:

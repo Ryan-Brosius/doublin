@@ -13,7 +13,7 @@ public abstract class OffensiveSpell : MonoBehaviour, ISpell
     public Element Element => element;
     public float Duration => duration;
 
-    public void Initialize(Element elem, GameObject caster, GameObject target, float baseDmg, float dur)
+    public void Initialize(Element elem, GameObject caster, Vector3 target, float baseDmg, float dur)
     {
         element = elem;
         spellCaster = caster;
@@ -22,15 +22,10 @@ public abstract class OffensiveSpell : MonoBehaviour, ISpell
         SetDamage(baseDmg, elem, caster);
     }
 
-    private void SetDirection(GameObject target)
+    private void SetDirection(Vector3 target)
     {
-        if (target){
-            direction = Vector3.Normalize(target.transform.position - transform.position);
-        }
-        else 
-        {
-            direction = spellCaster.transform.forward;
-        }
+        transform.LookAt(target);
+        direction = transform.forward;
     }
 
     public void SetDamage(float baseDamage, Element elem, GameObject caster)
@@ -38,10 +33,13 @@ public abstract class OffensiveSpell : MonoBehaviour, ISpell
         var spellCaster = caster.GetComponent<ISpellCaster>();
         float damageNum = baseDamage;
 
-        if (spellCaster.IsBuffed())
-        {
-            damageNum = baseDamage *  spellCaster.GetDmgMultiplier();
-        }
+        // Commenting this out below because Im refactoring code how to attack entities
+        // This buffing should be re-worked in the future if this gets picked up again
+
+        //if (spellCaster.IsBuffed())
+        //{
+        //    damageNum = baseDamage *  spellCaster.GetDmgMultiplier();
+        //}
 
         damage = new Damage(damageNum, elem, caster);
     }
@@ -54,11 +52,12 @@ public abstract class OffensiveSpell : MonoBehaviour, ISpell
 
     protected virtual void OnCollisionEnter(Collision collision)
     {
-        StopCoroutine(Fizzle());
-        var health = collision.collider.GetComponent<HealthComponent>();
-        if (health != null)
-            health.TakeDamage(damage);
-        Destroy(gameObject); 
+        var damageable = collision.collider.GetComponent<IDamageable>();
+        if (damageable != null)
+        {
+            damageable.TakeDamage(damage);
+            Destroy(gameObject);
+        }
     }
 
 }

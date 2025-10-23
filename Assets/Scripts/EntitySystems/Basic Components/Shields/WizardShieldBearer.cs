@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /*  Owner: Ryan Brosius
@@ -67,5 +68,13 @@ public class WizardShieldBearer : MonoBehaviour, IShieldBearer
     }
 
     public void SetShield(IShield newShield) => ActiveShield = newShield;
-    public void ClearShield() => ActiveShield = null;
+    public void ClearShield()
+    {
+        ActiveShield = null;
+
+        foreach (var shield in GetComponentsInChildren<MonoBehaviour>(true).OfType<IShield>())
+        {
+            shield.Break();
+        }
+    }
 }

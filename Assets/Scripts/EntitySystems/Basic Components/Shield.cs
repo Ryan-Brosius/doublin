@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 /*  Owner: Ryan Brosius
@@ -24,7 +25,7 @@ public class Shield : MonoBehaviour, IShield
 
     private void Awake()
     {
-        ScaleShieldVFX();
+        StartCoroutine(ScaleShieldVFX());
     }
 
     // Called from a ShieldSpellData scriptable object to dynamically create a shield
@@ -59,25 +60,29 @@ public class Shield : MonoBehaviour, IShield
         Destroy(gameObject);
     }
 
-    private void ScaleShieldVFX()
+    // We want to wait a frame before we do this because we need to wait for the clean-up from a previous shield if it existed
+    // Destroy plays on late-update so we should wait for a cleanup of the previous shield before we get dimensions of this one
+    private IEnumerator ScaleShieldVFX()
     {
+        yield return null;
+
         if (ShieldVFX == null)
-            return;
+            yield break;
 
         // Grab the parent that we are attatched to
         Transform parent = transform.parent;
         if (parent == null)
             // If parent not found just bail, was not spawned/attatched properly
-            return;
+            yield break;
 
-        ShieldVFX.transform.SetParent(parent);
+        //ShieldVFX.transform.SetParent(parent);
 
         // Grab all renderers in the parent
         Renderer[] renderers = parent.GetComponentsInChildren<Renderer>();
 
         // If no renderers are found then just bail
         if (renderers.Length == 0)
-            return;
+            yield break;
 
         // Grow a bounds to the size of the largest from the center
         Bounds totalBounds = renderers[0].bounds;
@@ -87,5 +92,13 @@ public class Shield : MonoBehaviour, IShield
         // Scale up the sphere VFX as needed to be largest bounds size * multiplier
         float maxSize = Mathf.Max(totalBounds.size.x, totalBounds.size.y, totalBounds.size.z);
         ShieldVFX.transform.localScale = ShieldVFX.transform.localScale * maxSize * shieldScaleMultiplier;
+    }
+
+    private void OnDestroy()
+    {
+        if (ShieldVFX != null)
+        {
+            Destroy(ShieldVFX);
+        }
     }
 }

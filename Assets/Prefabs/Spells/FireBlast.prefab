@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8523751604917667881}
   - component: {fileID: 3431571349967807207}
   - component: {fileID: 8922040458495457729}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FireBlast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   element: 1
   duration: 2
-  BoltVFX: {fileID: 0}
+  BlastVFX: {fileID: 0}
   radius: 5
 --- !u!54 &8922040458495457729
 Rigidbody:
