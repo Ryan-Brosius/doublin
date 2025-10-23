@@ -586,6 +586,7 @@ GameObject:
   - component: {fileID: 2215729186921573960}
   - component: {fileID: 3409947221144126065}
   - component: {fileID: 3724549013270783752}
+  - component: {fileID: 5726286217588324153}
   m_Layer: 0
   m_Name: Wand
   m_TagString: Untagged
@@ -662,6 +663,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5726286217588324153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 427093800117320108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9da83622ea28be44a56d5768746835f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  halfLife: 0.075
+  frequency: 18
+  angularDisplacement: 2
+  linearDisplacement: 0.05
 --- !u!1 &504042361681563613
 GameObject:
   m_ObjectHideFlags: 0
@@ -1048,6 +1065,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5971939303057459349}
+  - component: {fileID: 7969944744957409503}
   m_Layer: 0
   m_Name: Book
   m_TagString: Untagged
@@ -1072,6 +1090,22 @@ Transform:
   - {fileID: 5033024902143624486}
   m_Father: {fileID: 5755812306502265009}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7969944744957409503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1405542685519597973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9da83622ea28be44a56d5768746835f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  halfLife: 0.075
+  frequency: 18
+  angularDisplacement: 2
+  linearDisplacement: 0.05
 --- !u!1 &1423020005918119356
 GameObject:
   m_ObjectHideFlags: 0
