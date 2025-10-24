@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 682143f2da591934cbacbb533f8ab810, type: 3}
   m_Name: AimingSettings
-  m_EditorClassIdentifier: Assembly-CSharp::AimingSettings
+  m_EditorClassIdentifier: 
   maxRange: 40
   aimConeAngle: 5
   targetLayers:
@@ -23,4 +23,4 @@ MonoBehaviour:
   switchTargetCooldown: 0.25
   reticleSpinSpeed: 180
   maxTargets: 64
-  showDebugGizmos: 1
+  showDebugGizmos: 0
