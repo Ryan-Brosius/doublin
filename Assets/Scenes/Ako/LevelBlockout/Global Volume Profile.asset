@@ -9,14 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b221ea8fc75a0f540a5ac6f75f178401, type: 3}
-  m_Name: IceBolt
+  m_Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
+  m_Name: Global Volume Profile
   m_EditorClassIdentifier: 
-  spellName: Ice Bolt
-  spellType: 0
-  element: 2
-  baseDamage: 4
-  cooldown: 3
-  spellPrefab: {fileID: 3279866035805309996, guid: 62b3d43574fd39a418083bb07813deb9, type: 3}
-  speed: 18
-  duration: 3
+  components: []

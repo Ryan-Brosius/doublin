@@ -15,6 +15,7 @@ public class UI_Incantation : MonoBehaviour
         _InputManager.Value.OnGrimoireIncant += DisplayIncantation;
         _InputManager.Value.OnStaffCast += ResetIncantation;
         _InputManager.Value.OnStaffCancelIncant += ResetIncantation;
+        ResetIncantation();
     }
 
     public void DisplayIncantation(string c)
@@ -24,12 +25,12 @@ public class UI_Incantation : MonoBehaviour
         {
             ResetIncantation();
         }
-        incantationText.text = incantation;
+        incantationText.text = incantation.ToUpper();
     }
 
     public void ResetIncantation()
     {
         incantation = "";
-        incantationText.text = incantation;
+        incantationText.text = incantation.ToUpper();
     }
 }
