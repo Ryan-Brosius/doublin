@@ -7,12 +7,18 @@ public class RestartScene : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            RestartCurrentScene();
+            //RestartCurrentScene();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
         }
     }
 
     private void RestartCurrentScene()
     {
+        //DependencyContainer.Instance.Clear();
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name);
     }

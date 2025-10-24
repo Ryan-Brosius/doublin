@@ -449,6 +449,50 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &33698302
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 33698303}
+  - component: {fileID: 33698304}
+  m_Layer: 0
+  m_Name: Scene Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &33698303
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 33698302}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2134007898}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &33698304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 33698302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75bb270a632e0ed46944d35d904f3687, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &38053165
 GameObject:
   m_ObjectHideFlags: 0
@@ -2337,6 +2381,10 @@ PrefabInstance:
       propertyPath: playerCamera
       value: 
       objectReference: {fileID: 176351087}
+    - target: {fileID: 2956419786088989813, guid: 147983cc12743f349b5460f7079e4b89, type: 3}
+      propertyPath: _persistAcrossScenes
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4511004822188218727, guid: 147983cc12743f349b5460f7079e4b89, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2572,6 +2620,10 @@ PrefabInstance:
       propertyPath: GrimoireGoblin
       value: 
       objectReference: {fileID: 196205443}
+    - target: {fileID: 5960672222279003703, guid: b8f769ac050525c4e82afc538a693dc1, type: 3}
+      propertyPath: _persistAcrossScenes
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5960672222279003703, guid: b8f769ac050525c4e82afc538a693dc1, type: 3}
       propertyPath: StaffGoblinController
       value: 
@@ -10111,7 +10163,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6843802337737128067, guid: 98828cbfe600be949adc920a9f82f0c7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -34
+      value: -35
       objectReference: {fileID: 0}
     - target: {fileID: 6843802337737128067, guid: 98828cbfe600be949adc920a9f82f0c7, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10140,6 +10192,10 @@ PrefabInstance:
     - target: {fileID: 6843802337737128067, guid: 98828cbfe600be949adc920a9f82f0c7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132353570517482354, guid: 98828cbfe600be949adc920a9f82f0c7, type: 3}
+      propertyPath: moveSpeed
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11419,7 +11475,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6503887661791605335, guid: 8cfcfc0b555cd3841b60cd69f698d37c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -34
+      value: -35
       objectReference: {fileID: 0}
     - target: {fileID: 6503887661791605335, guid: 8cfcfc0b555cd3841b60cd69f698d37c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -14665,6 +14721,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6722033858171026933, guid: 2cfdd2caa41bebd4e8dba00b11de23e0, type: 3}
+      propertyPath: _persistAcrossScenes
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -17496,7 +17556,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90903ac57da33e945a2ecbe1c40b564a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _persistAcrossScenes: 1
+  _persistAcrossScenes: 0
   fireBolt: {fileID: 11400000, guid: 2a475604abae9c7498b6a392ae293c10, type: 2}
   iceBolt: {fileID: 11400000, guid: bbf59b84991369848ad3e76c32dd737a, type: 2}
   fireBlast: {fileID: 11400000, guid: 4a212f820e2edb448ad079e4a4f5c99d, type: 2}
@@ -18855,7 +18915,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4584546614159767099, guid: 4a810b9f403ee4966967857024a6da67, type: 3}
       propertyPath: scanningRange
-      value: 40
+      value: 38
       objectReference: {fileID: 0}
     - target: {fileID: 4584546614159767099, guid: 4a810b9f403ee4966967857024a6da67, type: 3}
       propertyPath: numberOfSkeletons
@@ -18891,7 +18951,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4584546614159767099, guid: 4a810b9f403ee4966967857024a6da67, type: 3}
       propertyPath: necromancerAbilities.Array.data[0].defaultCooldown
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4584546614159767099, guid: 4a810b9f403ee4966967857024a6da67, type: 3}
       propertyPath: necromancerAbilities.Array.data[1].defaultCooldown
@@ -19164,6 +19224,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1883274569}
+    - target: {fileID: 2486038992911682263, guid: da42aa847da78674a996bb81619d7c1c, type: 3}
+      propertyPath: moveSpeed
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 7364870758276657301, guid: da42aa847da78674a996bb81619d7c1c, type: 3}
       propertyPath: m_Name
       value: Staff Goblin
@@ -19182,7 +19246,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8552144445775941202, guid: da42aa847da78674a996bb81619d7c1c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -34
+      value: -35
       objectReference: {fileID: 0}
     - target: {fileID: 8552144445775941202, guid: da42aa847da78674a996bb81619d7c1c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -21148,7 +21212,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 535517733154116869, guid: 10ab444d094d3fb4d9af14505dba2236, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -43.396927
+      value: -44.396927
       objectReference: {fileID: 0}
     - target: {fileID: 535517733154116869, guid: 10ab444d094d3fb4d9af14505dba2236, type: 3}
       propertyPath: m_LocalRotation.w
@@ -21212,7 +21276,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1399235801758676784, guid: 10ab444d094d3fb4d9af14505dba2236, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -43.396927
+      value: -44.396927
       objectReference: {fileID: 0}
     - target: {fileID: 3064199868013136206, guid: 10ab444d094d3fb4d9af14505dba2236, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21224,7 +21288,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3064199868013136206, guid: 10ab444d094d3fb4d9af14505dba2236, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -34
+      value: -35
       objectReference: {fileID: 0}
     - target: {fileID: 3291199791412954101, guid: 10ab444d094d3fb4d9af14505dba2236, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21236,7 +21300,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3291199791412954101, guid: 10ab444d094d3fb4d9af14505dba2236, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -43.396927
+      value: -44.396927
       objectReference: {fileID: 0}
     - target: {fileID: 3363279253127346536, guid: 10ab444d094d3fb4d9af14505dba2236, type: 3}
       propertyPath: Target.TrackingTarget
@@ -21252,7 +21316,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4803254172294487117, guid: 10ab444d094d3fb4d9af14505dba2236, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -43.396927
+      value: -44.396927
       objectReference: {fileID: 0}
     - target: {fileID: 4803254172294487117, guid: 10ab444d094d3fb4d9af14505dba2236, type: 3}
       propertyPath: m_LocalRotation.w
@@ -21272,7 +21336,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5964135623563144801, guid: 10ab444d094d3fb4d9af14505dba2236, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -43.396927
+      value: -44.396927
       objectReference: {fileID: 0}
     - target: {fileID: 6100229629371849031, guid: 10ab444d094d3fb4d9af14505dba2236, type: 3}
       propertyPath: field of view
@@ -21292,7 +21356,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7525512115056171347, guid: 10ab444d094d3fb4d9af14505dba2236, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -43.396927
+      value: -44.396927
       objectReference: {fileID: 0}
     - target: {fileID: 8102209374984013791, guid: 10ab444d094d3fb4d9af14505dba2236, type: 3}
       propertyPath: staffTransform
@@ -21302,6 +21366,10 @@ PrefabInstance:
       propertyPath: grimoireTransform
       value: 
       objectReference: {fileID: 196205444}
+    - target: {fileID: 8102209374984013791, guid: 10ab444d094d3fb4d9af14505dba2236, type: 3}
+      propertyPath: _persistAcrossScenes
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8729386947935538885, guid: 10ab444d094d3fb4d9af14505dba2236, type: 3}
       propertyPath: field of view
       value: 70
@@ -25504,6 +25572,7 @@ Transform:
   - {fileID: 294635623}
   - {fileID: 429708587}
   - {fileID: 1430980063}
+  - {fileID: 33698303}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &63519876027801288
