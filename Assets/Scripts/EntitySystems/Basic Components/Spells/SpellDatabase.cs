@@ -44,15 +44,15 @@ public class SpellDatabase : SingletonMonobehavior<SpellDatabase>
         };
 
         RuneList = new Dictionary<string, string>(){
-            {"IL", "Fire"},
-            {"TF", "Fire"},
-            {"KJ", "Ice"},
-            {"GH", "Ice"},
-            {"JL", "Bolt"},
-            {"KLI", "Barrage"},
-            {"LIJK", "Blast"},
+            {"IJ", "Fire"},
+            {"TH", "Fire"},
+            {"KL", "Ice"},
+            {"GF", "Ice"},
+            {"FH", "Bolt"},
+            {"GHT", "Barrage"},
+            {"HTFG", "Blast"},
             {"LJ", "Shield"},
-            {"GFT", "Boon"}
+            {"KJI", "Boon"}
         };
     }
 
