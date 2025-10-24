@@ -336,6 +336,15 @@ public partial class @DoublinInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Incant"",
+                    ""type"": ""Value"",
+                    ""id"": ""bbb8c780-fc4b-46be-b10f-99875783c66c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -424,6 +433,50 @@ public partial class @DoublinInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""CancelIncant"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""76378f06-e11d-40a0-89b6-4762bdba5987"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Incant"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cd0e46e3-7401-4826-a184-a841f97dc74c"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Incant"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c1334a77-2c3d-45a8-806f-22110451c16d"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Incant"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""26bfd828-fd6d-4946-92ad-6777a6fc91e1"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Incant"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1021,6 +1074,7 @@ public partial class @DoublinInputActions: IInputActionCollection2, IDisposable
         m_Player2_Look = m_Player2.FindAction("Look", throwIfNotFound: true);
         m_Player2_Jump = m_Player2.FindAction("Jump", throwIfNotFound: true);
         m_Player2_CancelIncant = m_Player2.FindAction("CancelIncant", throwIfNotFound: true);
+        m_Player2_Incant = m_Player2.FindAction("Incant", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1248,6 +1302,7 @@ public partial class @DoublinInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player2_Look;
     private readonly InputAction m_Player2_Jump;
     private readonly InputAction m_Player2_CancelIncant;
+    private readonly InputAction m_Player2_Incant;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player 2".
     /// </summary>
@@ -1275,6 +1330,10 @@ public partial class @DoublinInputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player2/CancelIncant".
         /// </summary>
         public InputAction @CancelIncant => m_Wrapper.m_Player2_CancelIncant;
+        /// <summary>
+        /// Provides access to the underlying input action "Player2/Incant".
+        /// </summary>
+        public InputAction @Incant => m_Wrapper.m_Player2_Incant;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1313,6 +1372,9 @@ public partial class @DoublinInputActions: IInputActionCollection2, IDisposable
             @CancelIncant.started += instance.OnCancelIncant;
             @CancelIncant.performed += instance.OnCancelIncant;
             @CancelIncant.canceled += instance.OnCancelIncant;
+            @Incant.started += instance.OnIncant;
+            @Incant.performed += instance.OnIncant;
+            @Incant.canceled += instance.OnIncant;
         }
 
         /// <summary>
@@ -1336,6 +1398,9 @@ public partial class @DoublinInputActions: IInputActionCollection2, IDisposable
             @CancelIncant.started -= instance.OnCancelIncant;
             @CancelIncant.performed -= instance.OnCancelIncant;
             @CancelIncant.canceled -= instance.OnCancelIncant;
+            @Incant.started -= instance.OnIncant;
+            @Incant.performed -= instance.OnIncant;
+            @Incant.canceled -= instance.OnIncant;
         }
 
         /// <summary>
@@ -1700,6 +1765,13 @@ public partial class @DoublinInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnCancelIncant(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Incant" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnIncant(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

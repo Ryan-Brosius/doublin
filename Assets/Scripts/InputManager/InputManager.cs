@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.Rendering.VolumeComponent;
 
@@ -75,6 +77,7 @@ public class InputManager : SingletonMonobehavior<InputManager>
         inputActions.Player2.Look.canceled += ctx => HandleLook(PlayerID.StaffGoblin, Vector2.zero);
         inputActions.Player2.Jump.performed += _ => HandleCast(PlayerID.StaffGoblin);
         inputActions.Player2.CancelIncant.performed += _ => HandleCancelIncantation(PlayerID.StaffGoblin);
+        inputActions.Player2.Incant.performed += ctx => HandleIncant(PlayerID.StaffGoblin, ctx.control.name);
     }
 
     private void OnEnable()
@@ -170,6 +173,28 @@ public class InputManager : SingletonMonobehavior<InputManager>
                 case GoblinState.BookTop:
                     OnGrimoireIncant?.Invoke(incant);
                     break;
+                case GoblinState.Separated:
+                    break;
+            }
+        }
+
+        if (player == PlayerID.StaffGoblin)
+        {
+            var incantMap = new Dictionary<string, string>
+            {
+                { "upArrow", "T" },
+                { "leftArrow", "F" },
+                { "rightArrow", "h" },
+                { "downArrow", "g" }
+            };
+
+            switch (_GoblinStateManager.Value.CurrentGoblinState.Value)
+            {
+                case GoblinState.StaffTop:
+
+                    OnGrimoireIncant?.Invoke(incantMap[incant]);
+                    break;
+                case GoblinState.BookTop:
                 case GoblinState.Separated:
                     break;
             }
