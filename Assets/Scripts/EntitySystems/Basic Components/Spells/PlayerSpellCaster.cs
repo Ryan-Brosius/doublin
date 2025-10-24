@@ -50,6 +50,7 @@ public class PlayerSpellCaster : MonoBehaviour, ISpellCaster
     {
         HandleCastSpell(currentSpell);
         incant = "";
+        currentSpell = "";
     }
 
     private void HandleCastCancel() 
