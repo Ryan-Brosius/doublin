@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 867522681407715177}
   - component: {fileID: 9032975846664113746}
   - component: {fileID: 2335161932051857250}
+  - component: {fileID: 8727631591465588495}
   m_Layer: 6
   m_Name: Slime
   m_TagString: Untagged
@@ -175,3 +176,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 1
+--- !u!114 &8727631591465588495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1780739345498017388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ca975a46d79f594c92689095d9580c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contactDamage: 1
+  contactElementType: 0

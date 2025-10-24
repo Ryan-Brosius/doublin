@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6661909366183208012}
   - component: {fileID: 1626260098948316642}
   - component: {fileID: 4769091350947368953}
+  - component: {fileID: 6693258622963355629}
   m_Layer: 6
   m_Name: Ghoul
   m_TagString: Untagged
@@ -174,3 +175,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 10
+--- !u!114 &6693258622963355629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2846334112129219684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ca975a46d79f594c92689095d9580c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contactDamage: 2
+  contactElementType: 1

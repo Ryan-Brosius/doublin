@@ -11,14 +11,14 @@ public class GoblinStateManager : SingletonMonobehavior<GoblinStateManager>
     [SerializeField] public ObservableProperty<GoblinState> CurrentGoblinState;
 
     [Header("Goblin GameObject References")]
-    [SerializeField] private GameObject CombinedGoblin;
-    [SerializeField] private GameObject GrimoireGoblin;
-    [SerializeField] private GameObject StaffGoblin;
+    [SerializeField] public GameObject CombinedGoblin;
+    [SerializeField] public GameObject GrimoireGoblin;
+    [SerializeField] public GameObject StaffGoblin;
 
     [Header("Goblin Controller References")]
-    [SerializeField] private CombinedGoblinController CombinedGoblinController;
-    [SerializeField] private SplitGoblinController GrimoireGoblinController;
-    [SerializeField] private SplitGoblinController StaffGoblinController;
+    [SerializeField] public CombinedGoblinController CombinedGoblinController;
+    [SerializeField] public SplitGoblinController GrimoireGoblinController;
+    [SerializeField] public SplitGoblinController StaffGoblinController;
 
     protected override void Awake()
     {

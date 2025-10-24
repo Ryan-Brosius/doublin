@@ -146,6 +146,34 @@ public class CombinedGoblinController : MonoBehaviour
         var goblinController = topGoblin.GetComponent<SplitGoblinController>();
         goblinController.ThrowGoblin(transform.forward, throwForce);
     }
+
+    public void HandleSeperateNoThrow()
+    {
+        var topGoblin = _GoblinStateManager.Value.GetTopGoblin();
+        var bottomGoblin = _GoblinStateManager.Value.GetBottomGoblin();
+
+        _GoblinStateManager.Value.SeperateGoblins();
+
+        if (topGoblin.TryGetComponent<SplitGoblinController>(out SplitGoblinController splitGoblinController))
+        {
+            splitGoblinController.TeleportToPosition(CurrentTopPosition);
+            splitGoblinController.disableCombineCheck(0.5f);
+        }
+        topGoblin.transform.SetPositionAndRotation(
+            CurrentTopPosition,
+            transform.rotation
+        );
+
+        if (bottomGoblin.TryGetComponent<SplitGoblinController>(out SplitGoblinController splitGoblinController2))
+        {
+            splitGoblinController2.TeleportToPosition(CurrentBottomPosition);
+            splitGoblinController2.disableCombineCheck(0.5f);
+        }
+        bottomGoblin.transform.SetPositionAndRotation(
+            CurrentBottomPosition,
+            transform.rotation
+        );
+    }
     #endregion
 
     private void HandleMovement()

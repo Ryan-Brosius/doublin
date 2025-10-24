@@ -314,7 +314,7 @@ public class SplitGoblinController : MonoBehaviour
         combineCheckEnabled = true;
     }
 
-    private IEnumerator disableCombineCheck(float time)
+    public IEnumerator disableCombineCheck(float time)
     {
         combineCheckEnabled = false;
         yield return new WaitForSeconds(time);
@@ -332,5 +332,16 @@ public class SplitGoblinController : MonoBehaviour
 
         velocity = Vector3.zero;
         currentMove = Vector2.zero;
+    }
+
+    public void ApplyForce(Vector3 direction, float magnitude, ForceMode mode = ForceMode.VelocityChange)
+    {
+        if (rb == null)
+            rb = GetComponent<Rigidbody>();
+
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+
+        rb.AddForce(direction.normalized * magnitude, mode);
     }
 }
